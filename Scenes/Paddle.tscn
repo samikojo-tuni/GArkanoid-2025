@@ -1,0 +1,30 @@
+[gd_scene load_steps=6 format=3 uid="uid://b657ijmqdfo7"]
+
+[ext_resource type="Shader" uid="uid://d1dsvyjptvckg" path="res://Shaders/NineSplice.gdshader" id="1_5eqp2"]
+[ext_resource type="Texture2D" uid="uid://btemfcs2gght3" path="res://Art/32/paddle.png" id="1_8wypp"]
+[ext_resource type="Script" uid="uid://k46wemdhlfkj" path="res://Code/NineSpliceSprite2D.cs" id="3_ncdwn"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_1u0e0"]
+radius = 13.0
+height = 58.0
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_cld1q"]
+shader = ExtResource("1_5eqp2")
+shader_parameter/scale = Vector2(2, 1)
+shader_parameter/right = 18
+shader_parameter/top = 0
+shader_parameter/left = 18
+shader_parameter/bottom = 0
+
+[node name="Paddle" type="CharacterBody2D"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+rotation = 1.5708
+scale = Vector2(1, 2)
+shape = SubResource("CapsuleShape2D_1u0e0")
+
+[node name="PaddleSprite" type="Sprite2D" parent="CollisionShape2D"]
+material = SubResource("ShaderMaterial_cld1q")
+rotation = -1.5708
+texture = ExtResource("1_8wypp")
+script = ExtResource("3_ncdwn")

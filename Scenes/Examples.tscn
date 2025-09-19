@@ -1,0 +1,19 @@
+[gd_scene load_steps=4 format=3 uid="uid://c8nlrg4ex7viw"]
+
+[ext_resource type="Script" uid="uid://cr8hsvg8jby8l" path="res://Code/Examples/Fibonacci.cs" id="1_nr4mr"]
+[ext_resource type="Script" uid="uid://b08rdfkj5p7mb" path="res://Code/Examples/Movement.cs" id="2_1tats"]
+[ext_resource type="Texture2D" uid="uid://g48dlacy03dj" path="res://Art/32/ball.png" id="3_hsvb4"]
+
+[node name="Node2D" type="Node2D"]
+
+[node name="Fibonacci" type="Node" parent="."]
+script = ExtResource("1_nr4mr")
+_iterations = 15
+
+[node name="Mover" type="Node2D" parent="."]
+script = ExtResource("2_1tats")
+_inputType = 2
+
+[node name="Sprite2D" type="Sprite2D" parent="Mover"]
+position = Vector2(184, 70)
+texture = ExtResource("3_hsvb4")
