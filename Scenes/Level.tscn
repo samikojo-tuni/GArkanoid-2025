@@ -1,3 +1,8 @@
-[gd_scene format=3 uid="uid://c503i8m1ik58h"]
+[gd_scene load_steps=2 format=3 uid="uid://c503i8m1ik58h"]
+
+[ext_resource type="PackedScene" uid="uid://b657ijmqdfo7" path="res://Scenes/Paddle.tscn" id="1_0ba56"]
 
 [node name="Level" type="Node2D"]
+
+[node name="Paddle" parent="." instance=ExtResource("1_0ba56")]
+position = Vector2(545, 554)
