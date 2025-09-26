@@ -15,6 +15,12 @@ run/main_scene="uid://c503i8m1ik58h"
 config/features=PackedStringArray("4.4", "C#", "Forward Plus")
 config/icon="res://icon.svg"
 
+[display]
+
+window/size/viewport_width=640
+window/size/viewport_height=360
+window/stretch/mode="viewport"
+
 [dotnet]
 
 project/assembly_name="GArkanoid"
@@ -51,3 +57,13 @@ Launch={
 , Object(InputEventJoypadButton,"resource_local_to_scene":false,"resource_name":"","device":-1,"button_index":0,"pressure":0.0,"pressed":false,"script":null)
 ]
 }
+
+[layer_names]
+
+2d_physics/layer_1="Ball"
+2d_physics/layer_2="Paddle"
+2d_physics/layer_3="Static"
+
+[rendering]
+
+environment/defaults/default_clear_color=Color(0, 0, 0, 1)

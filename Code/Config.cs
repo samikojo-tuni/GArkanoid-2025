@@ -10,5 +10,10 @@ namespace GA.GArkanoid
 		public static StringName MoveLeftAction = "MoveLeft";
 		public static StringName MoveRightAction = "MoveRight";
 		public static StringName LaunchAction = "Launch";
+
+		#region Initial ball settings
+		public const float BallSpeed = 100f;
+		public static Vector2 BallDirection = new Vector2(1, -1).Normalized();
+		#endregion Initial ball settings
 	}
 }

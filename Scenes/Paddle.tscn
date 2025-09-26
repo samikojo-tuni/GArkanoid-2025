@@ -18,6 +18,8 @@ shader_parameter/left = 18
 shader_parameter/bottom = 0
 
 [node name="Paddle" type="CharacterBody2D"]
+collision_layer = 2
+collision_mask = 5
 script = ExtResource("1_ncdwn")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]

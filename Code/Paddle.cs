@@ -14,6 +14,10 @@ namespace GA.GArkanoid
 		private int _maxX = 0;
 		private Sprite2D _sprite = null;
 
+		// TODO: Create levelManager to control all level objects.
+		[Export]
+		private Ball _ball = null;
+
 		/// <summary>
 		/// The speed of the paddle (pixels / second);
 		/// </summary>
@@ -38,6 +42,11 @@ namespace GA.GArkanoid
 			if (@event is InputEventMouseMotion mouseMotionEvent)
 			{
 				_mouseInput += mouseMotionEvent.Relative.X;
+			}
+
+			if (_ball != null && @event.IsActionPressed(Config.LaunchAction))
+			{
+				_ball.Launch(Config.BallSpeed, Config.BallDirection);
 			}
 		}
 
