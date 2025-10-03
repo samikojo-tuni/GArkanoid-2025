@@ -1,0 +1,54 @@
+[gd_scene load_steps=6 format=3 uid="uid://bd2lucdeqqsp8"]
+
+[ext_resource type="Texture2D" uid="uid://blqe6gmy7v1jo" path="res://Art/32/vertical.png" id="1_qvfn2"]
+[ext_resource type="Texture2D" uid="uid://bw42hcwneemh5" path="res://Art/32/horizontal.png" id="2_eky4w"]
+[ext_resource type="Texture2D" uid="uid://cq63fhh6xexbr" path="res://Art/32/corner.png" id="3_b8isc"]
+[ext_resource type="Texture2D" uid="uid://g48dlacy03dj" path="res://Art/32/ball.png" id="4_b8isc"]
+[ext_resource type="Script" uid="uid://c5vsyn1i333q0" path="res://Code/CustomPhysics/CustomBall.cs" id="5_rw14t"]
+
+[node name="NoPhysics" type="Node2D"]
+
+[node name="Walls" type="Node2D" parent="."]
+
+[node name="Left" type="Sprite2D" parent="Walls"]
+position = Vector2(16, 180)
+scale = Vector2(1, 9.25)
+texture = ExtResource("1_qvfn2")
+
+[node name="Right" type="Sprite2D" parent="Walls"]
+position = Vector2(624, 180)
+scale = Vector2(1, 9.25)
+texture = ExtResource("1_qvfn2")
+
+[node name="Top" type="Sprite2D" parent="Walls"]
+position = Vector2(320, 16)
+scale = Vector2(18, 1)
+texture = ExtResource("2_eky4w")
+
+[node name="Bottom" type="Sprite2D" parent="Walls"]
+position = Vector2(319, 345)
+scale = Vector2(18, 1)
+texture = ExtResource("2_eky4w")
+
+[node name="TopLeft" type="Sprite2D" parent="Walls"]
+position = Vector2(16, 16)
+texture = ExtResource("3_b8isc")
+
+[node name="TopRight" type="Sprite2D" parent="Walls"]
+position = Vector2(624, 16)
+texture = ExtResource("3_b8isc")
+
+[node name="BottomRight" type="Sprite2D" parent="Walls"]
+position = Vector2(624, 344)
+texture = ExtResource("3_b8isc")
+
+[node name="BottomLeft" type="Sprite2D" parent="Walls"]
+position = Vector2(16, 344)
+texture = ExtResource("3_b8isc")
+
+[node name="CustomBall" type="Sprite2D" parent="." node_paths=PackedStringArray("_walls")]
+position = Vector2(325, 193)
+texture = ExtResource("4_b8isc")
+script = ExtResource("5_rw14t")
+_direction = Vector2(1, -1)
+_walls = [NodePath("../Walls/Left"), NodePath("../Walls/Right"), NodePath("../Walls/Top"), NodePath("../Walls/Bottom")]
