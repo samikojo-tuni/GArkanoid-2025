@@ -3,44 +3,89 @@
 [ext_resource type="PackedScene" uid="uid://b657ijmqdfo7" path="res://Scenes/Paddle.tscn" id="1_0ba56"]
 [ext_resource type="PackedScene" uid="uid://byp237db5y41i" path="res://Scenes/Ball.tscn" id="2_vsvp5"]
 [ext_resource type="Texture2D" uid="uid://bw42hcwneemh5" path="res://Art/32/horizontal.png" id="3_8rbpu"]
-[ext_resource type="Script" uid="uid://b4d5n3nkc57ie" path="res://Code/Examples/AreaCollisionTest.cs" id="4_fuudy"]
+[ext_resource type="Texture2D" uid="uid://blqe6gmy7v1jo" path="res://Art/32/vertical.png" id="4_xylue"]
+[ext_resource type="Texture2D" uid="uid://cq63fhh6xexbr" path="res://Art/32/corner.png" id="5_tj5wv"]
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_fuudy"]
-size = Vector2(32, 32)
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_8rbpu"]
-size = Vector2(32, 32)
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ienac"]
+size = Vector2(32, 31)
 
 [node name="Level" type="Node2D"]
 
 [node name="Paddle" parent="." node_paths=PackedStringArray("_ball") instance=ExtResource("1_0ba56")]
-position = Vector2(323, 312)
+position = Vector2(323, 305)
 _ball = NodePath("../Ball")
 
 [node name="Ball" parent="." instance=ExtResource("2_vsvp5")]
 position = Vector2(324, 255)
 
-[node name="StaticBody2D" type="StaticBody2D" parent="."]
-position = Vector2(526, 331)
+[node name="Walls" type="Node2D" parent="."]
+
+[node name="Top" type="StaticBody2D" parent="Walls"]
+position = Vector2(313, 15)
+scale = Vector2(18.44, 1)
 collision_layer = 4
 collision_mask = 3
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D"]
-scale = Vector2(5.595, 1)
-shape = SubResource("RectangleShape2D_fuudy")
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Walls/Top"]
+position = Vector2(0, 1)
+shape = SubResource("RectangleShape2D_ienac")
 
-[node name="Sprite2D" type="Sprite2D" parent="StaticBody2D/CollisionShape2D"]
+[node name="Sprite2D" type="Sprite2D" parent="Walls/Top/CollisionShape2D"]
 texture = ExtResource("3_8rbpu")
 
-[node name="Area2D" type="Area2D" parent="."]
-position = Vector2(557, 16)
-scale = Vector2(6.38, 1)
+[node name="Left" type="StaticBody2D" parent="Walls"]
+position = Vector2(16, 170)
+scale = Vector2(1, 9.339)
 collision_layer = 4
 collision_mask = 3
-script = ExtResource("4_fuudy")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
-shape = SubResource("RectangleShape2D_8rbpu")
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Walls/Left"]
+position = Vector2(0, 1)
+shape = SubResource("RectangleShape2D_ienac")
 
-[node name="Sprite2D" type="Sprite2D" parent="Area2D/CollisionShape2D"]
+[node name="Sprite2D" type="Sprite2D" parent="Walls/Left/CollisionShape2D"]
+position = Vector2(0, -0.0363015)
+texture = ExtResource("4_xylue")
+
+[node name="Right" type="StaticBody2D" parent="Walls"]
+position = Vector2(624, 172)
+scale = Vector2(1, 9.339)
+collision_layer = 4
+collision_mask = 3
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Walls/Right"]
+position = Vector2(0, 1)
+shape = SubResource("RectangleShape2D_ienac")
+
+[node name="Sprite2D" type="Sprite2D" parent="Walls/Right/CollisionShape2D"]
+position = Vector2(0, -0.0363015)
+texture = ExtResource("4_xylue")
+
+[node name="Bottom" type="StaticBody2D" parent="Walls"]
+position = Vector2(327, 343)
+scale = Vector2(18.44, 1)
+collision_layer = 4
+collision_mask = 3
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Walls/Bottom"]
+position = Vector2(0, 1)
+shape = SubResource("RectangleShape2D_ienac")
+
+[node name="Sprite2D" type="Sprite2D" parent="Walls/Bottom/CollisionShape2D"]
 texture = ExtResource("3_8rbpu")
+
+[node name="TopLeft" type="Sprite2D" parent="Walls"]
+position = Vector2(16, 16)
+texture = ExtResource("5_tj5wv")
+
+[node name="BottomLeft" type="Sprite2D" parent="Walls"]
+position = Vector2(16, 344)
+texture = ExtResource("5_tj5wv")
+
+[node name="BottomRight" type="Sprite2D" parent="Walls"]
+position = Vector2(624, 344)
+texture = ExtResource("5_tj5wv")
+
+[node name="TopRight" type="Sprite2D" parent="Walls"]
+position = Vector2(624, 16)
+texture = ExtResource("5_tj5wv")

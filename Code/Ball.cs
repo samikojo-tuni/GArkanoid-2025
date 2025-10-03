@@ -28,9 +28,10 @@ namespace GA.GArkanoid
 			}
 
 			KinematicCollision2D collisionData = MoveAndCollide(Velocity * (float)delta);
-			if (collisionData == null)
+			if (collisionData != null)
 			{
-				GD.Print("Collision happened.");
+				Direction = Direction.Bounce(collisionData.GetNormal()).Normalized();
+				Velocity = Direction * Speed;
 			}
 		}
 

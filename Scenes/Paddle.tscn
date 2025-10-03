@@ -17,10 +17,11 @@ shader_parameter/top = 0
 shader_parameter/left = 18
 shader_parameter/bottom = 0
 
-[node name="Paddle" type="CharacterBody2D"]
+[node name="Paddle" type="CharacterBody2D" node_paths=PackedStringArray("_ballLaunchPoint")]
 collision_layer = 2
 collision_mask = 5
 script = ExtResource("1_ncdwn")
+_ballLaunchPoint = NodePath("LaunchPoint")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 rotation = 1.5708
@@ -31,3 +32,6 @@ material = SubResource("ShaderMaterial_cld1q")
 rotation = -1.5708
 texture = ExtResource("1_8wypp")
 script = ExtResource("3_ncdwn")
+
+[node name="LaunchPoint" type="Node2D" parent="."]
+position = Vector2(0, -36)

@@ -19,6 +19,13 @@ namespace GA.GArkanoid
 		private Ball _ball = null;
 
 		/// <summary>
+		/// The position on top of the paddle where the ball
+		/// should be attached to before it is launched.
+		/// </summary>
+		[Export]
+		private Node2D _ballLaunchPoint = null;
+
+		/// <summary>
 		/// The speed of the paddle (pixels / second);
 		/// </summary>
 		/// <value></value>
@@ -35,6 +42,12 @@ namespace GA.GArkanoid
 		public override void _Process(double delta)
 		{
 			_horizontalInput = Input.GetAxis(Config.MoveLeftAction, Config.MoveRightAction);
+
+			if (_ball != null && !_ball.IsLaunched)
+			{
+				// The ball should follow the paddle before it is launched.
+				_ball.GlobalPosition = _ballLaunchPoint.GlobalPosition;
+			}
 		}
 
 		public override void _Input(InputEvent @event)
