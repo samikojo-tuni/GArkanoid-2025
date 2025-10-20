@@ -1,9 +1,10 @@
 // © 2025 Sami Kojo <sami.kojo@tuni.fi>
 // License: 3-Clause BSD License (See the project root folder for details).
 
-using Godot;
 using System;
 using GA.Common;
+using GA.GArkanoid.Physics;
+using Godot;
 
 namespace GA.GArkanoid
 {
@@ -33,6 +34,9 @@ namespace GA.GArkanoid
 		[Export]
 		private float _radius = 16f;
 
+		[Export]
+		private bool _useCircleCollision = true;
+
 		public Vector2 Velocity
 		{
 			get { return _direction * _speed; }
@@ -53,6 +57,25 @@ namespace GA.GArkanoid
 
 			// TODO: Calculate possible collisions with walls here.
 			// TODO: Bounce the ball in case of a collision.
+			foreach (Sprite2D wall in _walls)
+			{
+				CustomPhysics.Hit hit = _useCircleCollision
+					? CustomPhysics.Intersects(wall.GetBoundingBox(), newPosition, _radius)
+					: CustomPhysics.Intersects(wall.GetBoundingBox(), newPosition);
+
+				if (hit != null)
+				{
+					float radius = _useCircleCollision ? _radius : 0;
+					// Collision happened
+					_direction = CustomPhysics.Bounce(_direction, hit.Normal).Normalized();
+
+					Vector2 remaining = _direction * hit.Delta;
+					newPosition = hit.Point + hit.Normal * radius + remaining;
+
+					// TODO: Will this cause issues (if the ball collides with another wall after the bounce?)
+					break;
+				}
+			}
 
 
 			GlobalPosition = newPosition;

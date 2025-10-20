@@ -15,5 +15,11 @@ namespace GA.GArkanoid
 		public const float BallSpeed = 100f;
 		public static Vector2 BallDirection = new Vector2(1, -1).Normalized();
 		#endregion Initial ball settings
+
+		#region Player data
+		public static int MaxLives = 100;
+		public static int InitialLives = 3;
+		public static int InitialScore = 0;
+		#endregion Player data
 	}
 }

@@ -15,6 +15,10 @@ run/main_scene="uid://c503i8m1ik58h"
 config/features=PackedStringArray("4.4", "C#", "Forward Plus")
 config/icon="res://icon.svg"
 
+[autoload]
+
+GameManager="*res://Code/Systems/GameManager.cs"
+
 [display]
 
 window/size/viewport_width=640
