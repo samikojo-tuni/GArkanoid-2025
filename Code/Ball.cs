@@ -2,6 +2,7 @@
 // License: 3-Clause BSD License (See the project root folder for details).
 
 using System;
+using GA.GArkanoid.Systems;
 using Godot;
 
 namespace GA.GArkanoid
@@ -28,11 +29,29 @@ namespace GA.GArkanoid
 			}
 
 			KinematicCollision2D collisionData = MoveAndCollide(Velocity * (float)delta);
+			if (Bounce(collisionData))
+			{
+				GodotObject collidedObject = collisionData.GetCollider();
+				if (collidedObject is Block block)
+				{
+					block.Hit();
+				}
+				else if (collidedObject is Wall wall && wall.IsHazard)
+				{
+					GameManager.Instance.DecreaseLives();
+				}
+			}
+		}
+
+		private bool Bounce(KinematicCollision2D collisionData)
+		{
 			if (collisionData != null)
 			{
 				Direction = Direction.Bounce(collisionData.GetNormal()).Normalized();
 				Velocity = Direction * Speed;
 			}
+
+			return collisionData != null;
 		}
 
 		/// <summary>
@@ -47,6 +66,13 @@ namespace GA.GArkanoid
 			Speed = speed;
 			Direction = direction;
 			Velocity = Direction * Speed;
+		}
+
+		public void Reset()
+		{
+			Speed = 0;
+			Direction = Vector2.Zero;
+			Velocity = Vector2.Zero;
 		}
 	}
 }

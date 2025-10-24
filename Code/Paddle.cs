@@ -14,10 +14,6 @@ namespace GA.GArkanoid
 		private int _maxX = 0;
 		private Sprite2D _sprite = null;
 
-		// TODO: Create levelManager to control all level objects.
-		[Export]
-		private Ball _ball = null;
-
 		/// <summary>
 		/// The position on top of the paddle where the ball
 		/// should be attached to before it is launched.
@@ -32,6 +28,8 @@ namespace GA.GArkanoid
 		[Export]
 		public float Speed { get; set; } = 100f;
 
+		public Ball CurrentBall { get { return LevelManager.Active.CurrentBall; } }
+
 		#region Public Interface
 		public override void _Ready()
 		{
@@ -43,10 +41,10 @@ namespace GA.GArkanoid
 		{
 			_horizontalInput = Input.GetAxis(Config.MoveLeftAction, Config.MoveRightAction);
 
-			if (_ball != null && !_ball.IsLaunched)
+			if (CurrentBall != null && !CurrentBall.IsLaunched)
 			{
 				// The ball should follow the paddle before it is launched.
-				_ball.GlobalPosition = _ballLaunchPoint.GlobalPosition;
+				CurrentBall.GlobalPosition = _ballLaunchPoint.GlobalPosition;
 			}
 		}
 
@@ -57,9 +55,9 @@ namespace GA.GArkanoid
 				_mouseInput += mouseMotionEvent.Relative.X;
 			}
 
-			if (_ball != null && @event.IsActionPressed(Config.LaunchAction))
+			if (CurrentBall != null && @event.IsActionPressed(Config.LaunchAction))
 			{
-				_ball.Launch(Config.BallSpeed, Config.BallDirection);
+				CurrentBall.Launch(Config.BallSpeed, Config.BallDirection);
 			}
 		}
 

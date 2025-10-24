@@ -1,19 +1,23 @@
-[gd_scene load_steps=7 format=3 uid="uid://c503i8m1ik58h"]
+[gd_scene load_steps=9 format=3 uid="uid://c503i8m1ik58h"]
 
 [ext_resource type="PackedScene" uid="uid://b657ijmqdfo7" path="res://Scenes/Paddle.tscn" id="1_0ba56"]
+[ext_resource type="Script" uid="uid://x2m2t1wdyvun" path="res://Code/LevelManager.cs" id="1_5rrr5"]
 [ext_resource type="PackedScene" uid="uid://byp237db5y41i" path="res://Scenes/Ball.tscn" id="2_vsvp5"]
 [ext_resource type="Texture2D" uid="uid://bw42hcwneemh5" path="res://Art/32/horizontal.png" id="3_8rbpu"]
+[ext_resource type="Script" uid="uid://bh8uu6fyvvlx0" path="res://Code/Wall.cs" id="3_ienac"]
 [ext_resource type="Texture2D" uid="uid://blqe6gmy7v1jo" path="res://Art/32/vertical.png" id="4_xylue"]
 [ext_resource type="Texture2D" uid="uid://cq63fhh6xexbr" path="res://Art/32/corner.png" id="5_tj5wv"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ienac"]
 size = Vector2(32, 31)
 
-[node name="Level" type="Node2D"]
+[node name="Level" type="Node2D" node_paths=PackedStringArray("CurrentBall", "CurrentPaddle")]
+script = ExtResource("1_5rrr5")
+CurrentBall = NodePath("Ball")
+CurrentPaddle = NodePath("Paddle")
 
-[node name="Paddle" parent="." node_paths=PackedStringArray("_ball") instance=ExtResource("1_0ba56")]
+[node name="Paddle" parent="." instance=ExtResource("1_0ba56")]
 position = Vector2(323, 305)
-_ball = NodePath("../Ball")
 
 [node name="Ball" parent="." instance=ExtResource("2_vsvp5")]
 position = Vector2(324, 255)
@@ -25,6 +29,7 @@ position = Vector2(313, 15)
 scale = Vector2(18.44, 1)
 collision_layer = 4
 collision_mask = 3
+script = ExtResource("3_ienac")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Walls/Top"]
 position = Vector2(0, 1)
@@ -38,6 +43,7 @@ position = Vector2(16, 170)
 scale = Vector2(1, 9.339)
 collision_layer = 4
 collision_mask = 3
+script = ExtResource("3_ienac")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Walls/Left"]
 position = Vector2(0, 1)
@@ -52,6 +58,7 @@ position = Vector2(624, 172)
 scale = Vector2(1, 9.339)
 collision_layer = 4
 collision_mask = 3
+script = ExtResource("3_ienac")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Walls/Right"]
 position = Vector2(0, 1)
@@ -66,12 +73,15 @@ position = Vector2(327, 343)
 scale = Vector2(18.44, 1)
 collision_layer = 4
 collision_mask = 3
+script = ExtResource("3_ienac")
+IsHazard = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Walls/Bottom"]
 position = Vector2(0, 1)
 shape = SubResource("RectangleShape2D_ienac")
 
 [node name="Sprite2D" type="Sprite2D" parent="Walls/Bottom/CollisionShape2D"]
+modulate = Color(0.756863, 0, 0, 1)
 texture = ExtResource("3_8rbpu")
 
 [node name="TopLeft" type="Sprite2D" parent="Walls"]
