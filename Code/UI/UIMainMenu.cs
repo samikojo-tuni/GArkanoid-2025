@@ -19,11 +19,18 @@ namespace GA.GArkanoid.UI
 		[Export]
 		private Button _quitButton = null;
 
-		public override void _Ready()
+		public override void _EnterTree()
 		{
 			_newGameButton.Pressed += OnNewGame;
 			_settingsButton.Pressed += OnSettings;
 			_quitButton.Pressed += OnQuit;
+		}
+
+		public override void _ExitTree()
+		{
+			_newGameButton.Pressed -= OnNewGame;
+			_settingsButton.Pressed -= OnSettings;
+			_quitButton.Pressed -= OnQuit;
 		}
 
 		private void OnQuit()
@@ -33,7 +40,7 @@ namespace GA.GArkanoid.UI
 
 		private void OnSettings()
 		{
-			throw new NotImplementedException();
+			GameManager.Instance.ChangeState(StateType.Settings);
 		}
 
 		private void OnNewGame()

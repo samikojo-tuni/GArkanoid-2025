@@ -39,6 +39,9 @@ namespace GA.GArkanoid.Systems
 		{
 			new GameState(),
 			new MainMenuState(),
+			new GameOverState(),
+			new SettingsState(),
+			new PauseState(),
 // TODO: Add all the rest as well.
 		};
 
@@ -140,6 +143,21 @@ namespace GA.GArkanoid.Systems
 			Lives--;
 		}
 
+		public void Pause()
+		{
+			SceneTree.Paused = true;
+		}
+
+		public void Resume()
+		{
+			SceneTree.Paused = false;
+		}
+
+		public void TogglePause()
+		{
+			SceneTree.Paused = !SceneTree.Paused;
+		}
+
 		#region State machine
 
 		public bool ChangeState(StateType stateType)
@@ -172,8 +190,11 @@ namespace GA.GArkanoid.Systems
 				_loadedStates.Pop();
 			}
 
-			// Works great in Godot, but is broken in Unity!
-			previousState?.OnExit(); // TODO: Test if keepPrevious needs to be defined.
+			// The operators ?? and ?. work great in Godot, but are broken in Unity!
+
+			// The operator ?. checks wether the left operand is null or not and executes the 
+			// right operand only if the left one was not null.
+			previousState?.OnExit(keepPrevious);
 
 			// Same as 
 			// if (previousState != null)

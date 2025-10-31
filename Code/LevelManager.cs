@@ -25,7 +25,24 @@ namespace GA.GArkanoid
 			// TODO: Will this work when loading a new level?
 			GameManager.Instance.Reset();
 			LoadLevel(GameManager.Instance.LevelIndex);
+		}
+
+		public override void _EnterTree()
+		{
 			GameManager.Instance.LivesChanged += OnLivesChanged;
+		}
+
+		public override void _ExitTree()
+		{
+			GameManager.Instance.LivesChanged -= OnLivesChanged;
+		}
+
+		public override void _Process(double delta)
+		{
+			if (Input.IsActionJustPressed(Config.PauseAction))
+			{
+				GameManager.Instance.ChangeState(States.StateType.Pause);
+			}
 		}
 
 		public static string GetLevelContentPath(int levelIndex)
@@ -63,10 +80,7 @@ namespace GA.GArkanoid
 			else
 			{
 				// Game over
-				// TODO: Don't actually destroy the ball!
-				CurrentBall.QueueFree();
-				CurrentBall = null;
-				GD.Print("Game Over!");
+				GameManager.Instance.ChangeState(States.StateType.GameOver);
 			}
 		}
 	}

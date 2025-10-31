@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://c503i8m1ik58h"]
+[gd_scene load_steps=10 format=3 uid="uid://c503i8m1ik58h"]
 
 [ext_resource type="PackedScene" uid="uid://b657ijmqdfo7" path="res://Scenes/Paddle.tscn" id="1_0ba56"]
 [ext_resource type="Script" uid="uid://x2m2t1wdyvun" path="res://Code/LevelManager.cs" id="1_5rrr5"]
@@ -7,6 +7,7 @@
 [ext_resource type="Script" uid="uid://bh8uu6fyvvlx0" path="res://Code/Wall.cs" id="3_ienac"]
 [ext_resource type="Texture2D" uid="uid://blqe6gmy7v1jo" path="res://Art/32/vertical.png" id="4_xylue"]
 [ext_resource type="Texture2D" uid="uid://cq63fhh6xexbr" path="res://Art/32/corner.png" id="5_tj5wv"]
+[ext_resource type="PackedScene" uid="uid://2uqe357jyh53" path="res://Scenes/UI/InGameUI.tscn" id="8_5rrr5"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ienac"]
 size = Vector2(32, 31)
@@ -99,3 +100,15 @@ texture = ExtResource("5_tj5wv")
 [node name="TopRight" type="Sprite2D" parent="Walls"]
 position = Vector2(624, 16)
 texture = ExtResource("5_tj5wv")
+
+[node name="InGameUI" parent="." instance=ExtResource("8_5rrr5")]
+offset_right = 640.0
+offset_bottom = 360.0
+
+[node name="HBoxContainer" parent="InGameUI" index="0"]
+offset_left = 33.0
+offset_top = 33.0
+offset_right = -33.0
+offset_bottom = 61.0
+
+[editable path="InGameUI"]

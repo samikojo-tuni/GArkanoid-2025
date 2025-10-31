@@ -1,0 +1,28 @@
+[gd_scene load_steps=2 format=3 uid="uid://c4c2vjh56lwe3"]
+
+[ext_resource type="Script" uid="uid://vvwau34vdsgt" path="res://Code/UI/UIAudioControl.cs" id="1_3axt6"]
+
+[node name="AudioControl" type="HBoxContainer" node_paths=PackedStringArray("_nameLabel", "_volumeSlider", "_valueLabel")]
+script = ExtResource("1_3axt6")
+_nameLabel = NodePath("NameLabel")
+_volumeSlider = NodePath("VolumeSlider")
+_valueLabel = NodePath("ValueLabel")
+
+[node name="NameLabel" type="Label" parent="."]
+custom_minimum_size = Vector2(50, 0)
+layout_mode = 2
+theme_override_font_sizes/font_size = 12
+text = "Master"
+
+[node name="VolumeSlider" type="HSlider" parent="."]
+layout_mode = 2
+size_flags_horizontal = 3
+max_value = 1.0
+step = 0.01
+
+[node name="ValueLabel" type="Label" parent="."]
+custom_minimum_size = Vector2(25, 0)
+layout_mode = 2
+theme_override_font_sizes/font_size = 12
+text = "100"
+horizontal_alignment = 2

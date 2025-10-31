@@ -1,0 +1,60 @@
+[gd_scene load_steps=2 format=3 uid="uid://et7nx7yrbfky"]
+
+[ext_resource type="Script" uid="uid://c3ucwwq2xrckd" path="res://Code/UI/UIGameOver.cs" id="1_n002h"]
+
+[node name="GameOver" type="Control" node_paths=PackedStringArray("_scoreLabel", "_newGameButton", "_backToMenuButton")]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_n002h")
+_scoreLabel = NodePath("ScoreLabel")
+_newGameButton = NodePath("VBoxContainer/NewGameButton")
+_backToMenuButton = NodePath("VBoxContainer/MainMenuButton")
+
+[node name="Headline" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_top = 25.0
+offset_bottom = 81.0
+grow_horizontal = 2
+theme_override_font_sizes/font_size = 48
+text = "Game Over!"
+horizontal_alignment = 1
+
+[node name="ScoreLabel" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_top = 80.0
+offset_bottom = 108.0
+grow_horizontal = 2
+text = "Your score: xxx"
+horizontal_alignment = 1
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -84.5
+offset_top = -122.0
+offset_right = 84.5
+offset_bottom = -10.0
+grow_horizontal = 2
+grow_vertical = 0
+
+[node name="NewGameButton" type="Button" parent="VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+text = "Restart Game"
+
+[node name="MainMenuButton" type="Button" parent="VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+text = "Back to Menu"

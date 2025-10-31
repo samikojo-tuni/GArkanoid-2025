@@ -10,6 +10,7 @@ namespace GA.GArkanoid
 		public static StringName MoveLeftAction = "MoveLeft";
 		public static StringName MoveRightAction = "MoveRight";
 		public static StringName LaunchAction = "Launch";
+		public static StringName PauseAction = "Pause";
 
 		#region Initial ball settings
 		public const float BallSpeed = 100f;
