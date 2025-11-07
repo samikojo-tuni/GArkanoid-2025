@@ -33,6 +33,7 @@ project/assembly_name="GArkanoid"
 
 folder_colors={
 "res://Art/": "red",
+"res://Audio/": "teal",
 "res://Code/": "orange",
 "res://Fonts/": "yellow",
 "res://Scenes/": "green",
