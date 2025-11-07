@@ -1,0 +1,27 @@
+[gd_scene load_steps=5 format=3 uid="uid://dpql04pknj1j4"]
+
+[ext_resource type="Script" uid="uid://myyus1j5yj7t" path="res://Code/Effect.cs" id="1_7ajup"]
+[ext_resource type="Texture2D" uid="uid://dxfnt6kqa87oe" path="res://Art/32/pixel-explosion.png" id="1_060vi"]
+[ext_resource type="Material" uid="uid://bnocjk3vggg8x" path="res://Effects/ProcessMaterials/BaseCollisionMaterial.tres" id="1_388i1"]
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_7ajup"]
+particles_animation = true
+particles_anim_h_frames = 2
+particles_anim_v_frames = 3
+particles_anim_loop = false
+
+[node name="BaseCollisionEffect" type="Node2D" node_paths=PackedStringArray("ParticleEffect", "Audio")]
+script = ExtResource("1_7ajup")
+ParticleEffect = NodePath("GPUParticles2D")
+Audio = NodePath("AudioStreamPlayer")
+
+[node name="GPUParticles2D" type="GPUParticles2D" parent="."]
+material = SubResource("CanvasItemMaterial_7ajup")
+emitting = false
+texture = ExtResource("1_060vi")
+lifetime = 0.25
+explosiveness = 1.0
+process_material = ExtResource("1_388i1")
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+bus = &"SFX"

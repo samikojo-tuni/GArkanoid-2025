@@ -34,11 +34,19 @@ namespace GA.GArkanoid
 				GodotObject collidedObject = collisionData.GetCollider();
 				if (collidedObject is Block block)
 				{
+					LevelManager.Active.EffectPlayer.PlayEffect(EffectType.Hit, GlobalPosition);
 					block.Hit();
 				}
 				else if (collidedObject is Wall wall && wall.IsHazard)
 				{
+					LevelManager.Active.EffectPlayer.PlayEffect(EffectType.Death, GlobalPosition);
 					GameManager.Instance.DecreaseLives();
+				}
+				else
+				{
+					// Regular collision, nothing special
+					// TODO: Play effect
+					LevelManager.Active.EffectPlayer.PlayEffect(EffectType.Bounce, GlobalPosition);
 				}
 			}
 		}

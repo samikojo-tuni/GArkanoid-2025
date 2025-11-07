@@ -1,0 +1,13 @@
+[gd_scene load_steps=4 format=3 uid="uid://brxu445mpiln1"]
+
+[ext_resource type="PackedScene" uid="uid://dpql04pknj1j4" path="res://Scenes/Effects/BaseCollisionEffect.tscn" id="1_wk5uv"]
+[ext_resource type="Material" uid="uid://cgns3dojwwy2x" path="res://Effects/ProcessMaterials/DeathEffect.tres" id="2_5pcsy"]
+[ext_resource type="AudioStream" uid="uid://domwe7k60ivnt" path="res://Audio/457756__tissman__fail8.wav" id="3_fkshv"]
+
+[node name="BaseCollisionEffect" instance=ExtResource("1_wk5uv")]
+
+[node name="GPUParticles2D" parent="." index="0"]
+process_material = ExtResource("2_5pcsy")
+
+[node name="AudioStreamPlayer" parent="." index="1"]
+stream = ExtResource("3_fkshv")

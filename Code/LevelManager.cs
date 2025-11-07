@@ -19,6 +19,10 @@ namespace GA.GArkanoid
 		// TODO: When is this initialized?
 		public static LevelManager Active { get; private set; } = null;
 
+		// TODO: Get reference runtime if null.
+		[Export]
+		public EffectPlayer EffectPlayer { get; private set; }
+
 		public override void _Ready()
 		{
 			Active = this;

@@ -1,0 +1,13 @@
+[gd_scene load_steps=4 format=3 uid="uid://bab1f1irkcvsl"]
+
+[ext_resource type="PackedScene" uid="uid://dpql04pknj1j4" path="res://Scenes/Effects/BaseCollisionEffect.tscn" id="1_h2fw2"]
+[ext_resource type="Material" uid="uid://cn3i2vhfv4n25" path="res://Effects/ProcessMaterials/HitMaterial.tres" id="2_neqog"]
+[ext_resource type="AudioStream" uid="uid://dp1d4masvie7m" path="res://Audio/822409__astro_denticle__gsus2-orch-hit-sym-fantastique-op.wav" id="3_cm0nn"]
+
+[node name="BaseCollisionEffect" instance=ExtResource("1_h2fw2")]
+
+[node name="GPUParticles2D" parent="." index="0"]
+process_material = ExtResource("2_neqog")
+
+[node name="AudioStreamPlayer" parent="." index="1"]
+stream = ExtResource("3_cm0nn")
