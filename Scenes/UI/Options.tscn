@@ -1,10 +1,11 @@
-[gd_scene load_steps=4 format=3 uid="uid://c0gd1efhpfjyx"]
+[gd_scene load_steps=5 format=3 uid="uid://c0gd1efhpfjyx"]
 
 [ext_resource type="Texture2D" uid="uid://c7hti6m6s20ve" path="res://Art/32/frame.png" id="1_h8s0t"]
 [ext_resource type="Script" uid="uid://b5en7js67kuyf" path="res://Code/UI/UIOptions.cs" id="1_tut6h"]
 [ext_resource type="PackedScene" uid="uid://c4c2vjh56lwe3" path="res://Scenes/UI/AudioControl.tscn" id="3_eothy"]
+[ext_resource type="Script" uid="uid://hfohhw1aw5ci" path="res://Code/UI/UIShowOnState.cs" id="4_bgrb0"]
 
-[node name="Options" type="Control" node_paths=PackedStringArray("_okButton", "_cancelButton", "_masterControl", "_musicControl", "_sfxControl")]
+[node name="Options" type="Control" node_paths=PackedStringArray("_okButton", "_cancelButton", "_mainMenuButton", "_masterControl", "_musicControl", "_sfxControl", "_resolutionDropdown", "_fullscreenToggle")]
 process_mode = 3
 layout_mode = 3
 anchors_preset = 15
@@ -15,9 +16,12 @@ grow_vertical = 2
 script = ExtResource("1_tut6h")
 _okButton = NodePath("Background/ButtonsContainer/OKButton")
 _cancelButton = NodePath("Background/ButtonsContainer/CancelButton")
+_mainMenuButton = NodePath("Background/MainMenuButton")
 _masterControl = NodePath("Background/AudioContainer/MasterAudioControl")
 _musicControl = NodePath("Background/AudioContainer/MusicAudioControl")
 _sfxControl = NodePath("Background/AudioContainer/SFXAudioControl")
+_resolutionDropdown = NodePath("Background/VideoContainer/ResolutionDropdown")
+_fullscreenToggle = NodePath("Background/VideoContainer/FullscreenCheckBox")
 _masterBusName = "Master"
 _musicBusName = "Music"
 _sfxBusName = "SFX"
@@ -136,7 +140,28 @@ horizontal_alignment = 1
 [node name="ResolutionDropdown" type="OptionButton" parent="Background/VideoContainer"]
 layout_mode = 2
 
-[node name="CheckBox" type="CheckBox" parent="Background/VideoContainer"]
+[node name="FullscreenCheckBox" type="CheckBox" parent="Background/VideoContainer"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 12
 text = "Fullscreen"
+
+[node name="HSeparator" type="HSeparator" parent="Background/VideoContainer"]
+layout_mode = 2
+
+[node name="MainMenuButton" type="Button" parent="Background"]
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 7.0
+offset_top = -68.0
+offset_right = -7.0
+offset_bottom = -41.0
+grow_horizontal = 2
+grow_vertical = 0
+text = "Back to Main Menu"
+
+[node name="EnableNode" type="Node" parent="Background/MainMenuButton"]
+script = ExtResource("4_bgrb0")
+_enableStates = Array[int]([5])

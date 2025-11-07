@@ -22,6 +22,8 @@ namespace GA.GArkanoid.Systems
 	/// </summary>
 	public partial class GameManager : Singleton<GameManager>
 	{
+		public static Vector2I MinWindowSize { get; private set; }
+
 		[Signal]
 		public delegate void LivesChangedEventHandler(int lives);
 
@@ -101,6 +103,7 @@ namespace GA.GArkanoid.Systems
 		protected override void Initialize()
 		{
 			GD.Print("GameManager initialized!");
+			MinWindowSize = GetWindow().Size;
 		}
 
 		public void Reset()
@@ -180,21 +183,25 @@ namespace GA.GArkanoid.Systems
 				return false;
 			}
 
-			// TODO: Test this properly
-
-			GameStateBase previousState = ActiveState;
 			bool keepPrevious = nextState.IsAdditive;
 
-			if (!keepPrevious && ActiveState != null)
+			GameStateBase previousState = keepPrevious || ActiveState == null
+				? ActiveState
+				: _loadedStates.Pop();
+
+			previousState?.OnExit(keepPrevious);
+
+			while (!keepPrevious && ActiveState != null)
 			{
-				_loadedStates.Pop();
+				previousState = _loadedStates.Pop();
+				previousState?.OnExit(keepPrevious);
 			}
 
 			// The operators ?? and ?. work great in Godot, but are broken in Unity!
 
 			// The operator ?. checks wether the left operand is null or not and executes the 
 			// right operand only if the left one was not null.
-			previousState?.OnExit(keepPrevious);
+
 
 			// Same as 
 			// if (previousState != null)
