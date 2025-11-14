@@ -87,12 +87,37 @@ namespace GA.GArkanoid
 
 		public Dictionary Save()
 		{
-			throw new NotImplementedException();
+			Dictionary ballData = new Dictionary();
+			ballData["Speed"] = Speed;
+
+			Dictionary positionData = new Dictionary
+			{
+				{"X", GlobalPosition.X},
+				{"Y", GlobalPosition.Y}
+			};
+
+			Dictionary directionData = new Dictionary
+			{
+				{"X", Direction.X},
+				{"Y", Direction.Y}
+			};
+
+			ballData["Position"] = positionData;
+			ballData["Direction"] = directionData;
+
+			return ballData;
 		}
 
 		public void Load(Dictionary data)
 		{
-			throw new NotImplementedException();
+			Speed = (float)data["Speed"];
+			Dictionary positionData = (Dictionary)data["Position"];
+			Dictionary directionData = (Dictionary)data["Direction"];
+
+			GlobalPosition = new Vector2((float)positionData["X"], (float)positionData["Y"]);
+			Direction = new Vector2((float)directionData["X"], (float)directionData["Y"]);
+
+			Velocity = Direction * Speed;
 		}
 	}
 }

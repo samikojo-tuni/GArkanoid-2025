@@ -1,6 +1,7 @@
 // © 2025 Sami Kojo <sami.kojo@tuni.fi>
 // License: 3-Clause BSD License (See the project root folder for details).
 
+using System.IO;
 using Godot;
 
 namespace GA.GArkanoid
@@ -23,6 +24,24 @@ namespace GA.GArkanoid
 		public static StringName MusicBusName = "Music";
 		public static StringName SFXBusName = "SFX";
 		public static string MusicDataPath = "res://Config/MusicData.tres";
-		#endregion
+		#endregion Audio
+
+		#region Save
+		public static string QuickSaveName = "QuickSave";
+		public static string SaveFolderName = "Save";
+		public static string SaveFileExtension = ".json";
+		public static string PlayerDataKey = "PlayerData";
+		public static string LevelDataKey = "LevelData";
+		public static StringName QuickSaveAction = "QuickSave";
+
+		public static string GetSaveFolderPath()
+		{
+			// The path on user's disk where save files can be written.
+			string path = ProjectSettings.GlobalizePath("user://");
+			// Path.Combine selects corrent path separation character (/ or \) based on the user's platform.
+			path = Path.Combine(path, SaveFolderName);
+			return path;
+		}
+		#endregion Save
 	}
 }

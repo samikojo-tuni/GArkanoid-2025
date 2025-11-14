@@ -3,7 +3,7 @@
 [ext_resource type="Theme" uid="uid://b8n6lbi652tn3" path="res://UI/UI_Theme.tres" id="1_g18y6"]
 [ext_resource type="Script" uid="uid://c58snbb5y0uc1" path="res://Code/UI/UIMainMenu.cs" id="1_mjmdf"]
 
-[node name="MainMenu" type="Control" node_paths=PackedStringArray("_newGameButton", "_settingsButton", "_quitButton")]
+[node name="MainMenu" type="Control" node_paths=PackedStringArray("_newGameButton", "_settingsButton", "_quitButton", "_loadButton")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -14,6 +14,7 @@ script = ExtResource("1_mjmdf")
 _newGameButton = NodePath("VBoxContainer/NewGameButton")
 _settingsButton = NodePath("VBoxContainer/OptionsButton")
 _quitButton = NodePath("VBoxContainer/QuitButton")
+_loadButton = NodePath("VBoxContainer/LoadGameButton")
 
 [node name="Header" type="Label" parent="."]
 layout_mode = 1
@@ -46,6 +47,11 @@ grow_vertical = 0
 layout_mode = 2
 theme = ExtResource("1_g18y6")
 text = "New Game"
+
+[node name="LoadGameButton" type="Button" parent="VBoxContainer"]
+layout_mode = 2
+theme = ExtResource("1_g18y6")
+text = "Load Game"
 
 [node name="OptionsButton" type="Button" parent="VBoxContainer"]
 layout_mode = 2

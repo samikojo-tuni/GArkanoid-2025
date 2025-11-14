@@ -2,11 +2,13 @@
 // License: 3-Clause BSD License (See the project root folder for details).
 
 using System;
+using GA.Common;
 using GA.GArkanoid.Systems;
 using Godot;
 
 namespace GA.GArkanoid
 {
+	[Tool]
 	public partial class Block : StaticBody2D
 	{
 		[Signal]
@@ -18,9 +20,37 @@ namespace GA.GArkanoid
 		[Export]
 		private int _score = 0;
 
-		// TODO: Add support for health.
+		private bool _isEnabled = true;
+
+		public bool IsEnabled
+		{
+			get { return _isEnabled; }
+			set
+			{
+				_isEnabled = value;
+				_sprite.Visible = value;
+				_collisionShape.Disabled = !value;
+			}
+		}
+
+		[Export] public string GUID { get; private set; } = null;
 
 		private Sprite2D _sprite = null;
+		private CollisionShape2D _collisionShape = null;
+
+		public override void _EnterTree()
+		{
+			// TODO: To make sure all ID's are unique and not copied from the patent scene, create an
+			// editor tool to ensure GUID uniqueness!
+			if (Engine.IsEditorHint())
+			{
+				if (string.IsNullOrWhiteSpace(GUID))
+				{
+					GUID = Guid.NewGuid().ToString();
+					GD.Print($"Created a new GUID for the object {this.Name}");
+				}
+			}
+		}
 
 		public override void _Ready()
 		{
@@ -29,12 +59,13 @@ namespace GA.GArkanoid
 			{
 				_sprite.Modulate = _blockColor;
 			}
+
+			_collisionShape = this.GetNode<CollisionShape2D>();
 		}
 
 		public void Hit()
 		{
-			// TODO: Implement the Health system
-			QueueFree(); // TODO: Don't actually destroy blocks for saving purposes!
+			IsEnabled = false;
 
 			// Access GameManager singleton using its Instance property.
 			GameManager.Instance.AddScore(_score);

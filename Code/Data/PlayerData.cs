@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using GA.GArkanoid.Save;
 using Godot;
 using Godot.Collections;
@@ -7,6 +8,18 @@ namespace GA.GArkanoid.Data
 	[GlobalClass]
 	public partial class PlayerData : Resource, ISave
 	{
+		/// <summary>
+		///  A factory method, which creates a new PlayerData object and populates its data with ones loaded from the dictionary.
+		/// </summary>
+		/// <param name="data">Dictionary containing the data.</param>
+		/// <returns></returns>
+		public static PlayerData Deserialize(Dictionary data)
+		{
+			PlayerData result = new PlayerData();
+			result.Load(data);
+			return result;
+		}
+
 		[Signal] public delegate void LivesChangedEventHandler(int lives);
 		[Signal] public delegate void ScoreChangedEventHandler(int score);
 
@@ -51,14 +64,32 @@ namespace GA.GArkanoid.Data
 			}
 		}
 
+		/// <summary>
+		/// Serializes the data for storing it.
+		/// </summary>
+		/// <returns>The dictionary containing the data for this object.</returns>
 		public Dictionary Save()
 		{
-			throw new System.NotImplementedException();
+			return new Dictionary
+			{
+				["Lives"] = Lives,
+				["Score"] = Score,
+				["BallSpeed"] = BallSpeed,
+				["PaddleWidth"] = PaddleWidth,
+				["PaddleSpeed"] = PaddleSpeed,
+				["LevelIndex"] = LevelIndex,
+			};
 		}
 
 		public void Load(Dictionary data)
 		{
-			throw new System.NotImplementedException();
+			// TODO: Read default values from the resource file.
+			Lives = (int)data.GetValueOrDefault("Lives", 3);
+			Score = (int)data.GetValueOrDefault("Score", 0);
+			BallSpeed = (float)data.GetValueOrDefault("BallSpeed", 50f);
+			PaddleSpeed = (float)data.GetValueOrDefault("PaddleSpeed", 50f);
+			PaddleWidth = (float)data.GetValueOrDefault("PaddleWidth", 1f);
+			LevelIndex = (int)data.GetValueOrDefault("LevelIndex", 1);
 		}
 	}
 }

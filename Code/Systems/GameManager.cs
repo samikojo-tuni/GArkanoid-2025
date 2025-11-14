@@ -3,11 +3,13 @@
 
 using System;
 using System.Collections.Generic;
+using System.IO;
 using GA.Common;
 using GA.Common.Godot;
 using GA.GArkanoid.Data;
 using GA.GArkanoid.States;
 using Godot;
+using Godot.Collections;
 
 /*
 GameManager
@@ -104,6 +106,9 @@ namespace GA.GArkanoid.Systems
 
 		public PlayerData DefaultPlayerData { get; private set; } = null;
 		public PlayerData CurrentPlayerData { get; private set; } = null;
+
+		// TODO: A bit hacky solution. Figure out something better.
+		public Dictionary LoadedLevelData { get; set; }
 
 		protected override void Initialize()
 		{
@@ -220,12 +225,108 @@ namespace GA.GArkanoid.Systems
 		#region Save
 		public void Save(string saveSlotName)
 		{
+			string savePath = Config.GetSaveFolderPath();
 
+			// Form the save data.
+			Dictionary saveData = new Dictionary();
+			Dictionary playerData = CurrentPlayerData.Save();
+			Dictionary levelData = LevelManager.Active.Save();
+
+			saveData[Config.PlayerDataKey] = playerData;
+			saveData[Config.LevelDataKey] = levelData;
+
+			string jsonData = Json.Stringify(saveData);
+
+			if (SaveToFile(savePath, saveSlotName, Config.SaveFileExtension, jsonData))
+			{
+				GD.Print($"File saved to {savePath}");
+			}
+			else
+			{
+				GD.PrintErr("Saving failed!");
+			}
 		}
 
 		public bool Load(string saveSlotName)
 		{
-			throw new NotImplementedException();
+			string savePath = Config.GetSaveFolderPath();
+			Json jsonLoader = new Json();
+
+			string json = LoadFromFile(savePath, saveSlotName, Config.SaveFileExtension);
+
+			Error error = jsonLoader.Parse(json);
+			if (error != Error.Ok)
+			{
+				GD.PrintErr("Error parsing JSON file: " + error);
+				return false;
+			}
+
+			Dictionary loadedData = (Dictionary)jsonLoader.Data;
+			Dictionary playerData = (Dictionary)loadedData[Config.PlayerDataKey];
+			CurrentPlayerData = PlayerData.Deserialize(playerData);
+
+			LoadedLevelData = (Dictionary)loadedData[Config.LevelDataKey];
+
+			return true;
+		}
+
+		private string LoadFromFile(string saveFolder, string saveFile, string saveExtension)
+		{
+			string saveFilePath = Path.Combine(saveFolder, saveFile + saveExtension);
+			if (!File.Exists(saveFilePath))
+			{
+				return null;
+			}
+
+			try
+			{
+				return File.ReadAllText(saveFilePath);
+			}
+			catch (Exception e)
+			{
+				GD.PushError($"Something went wrong reading the save file. Message: {e.Message}");
+				return null;
+			}
+		}
+
+		private bool SaveToFile(string saveFolder, string saveFile, string saveExtension, string jsonData)
+		{
+			if (!Directory.Exists(saveFolder))
+			{
+				try
+				{
+					Directory.CreateDirectory(saveFolder);
+				}
+				catch (ArgumentNullException e)
+				{
+					GD.PushError($"Argument is null. Message: {e.Message}");
+					return false;
+				}
+				catch (PathTooLongException e)
+				{
+					GD.PushError($"Save folder path is too long. Message: {e.Message}");
+					return false;
+				}
+				catch (Exception e)
+				{
+					GD.PushError($"Something went wrong! Message: {e.Message}");
+					return false;
+				}
+			}
+
+			string saveFilePath = Path.Combine(saveFolder, saveFile + saveExtension);
+
+			try
+			{
+				File.WriteAllText(saveFilePath, jsonData);
+			}
+			catch (Exception e)
+			{
+				GD.PushError(e.Message);
+				return false;
+			}
+
+			return true;
 		}
 		#endregion
 

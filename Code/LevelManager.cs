@@ -1,6 +1,8 @@
 // © 2025 Sami Kojo <sami.kojo@tuni.fi>
 // License: 3-Clause BSD License (See the project root folder for details).
 
+using System.Collections;
+using System.Collections.Generic;
 using GA.Common;
 using GA.GArkanoid.Save;
 using GA.GArkanoid.Systems;
@@ -41,12 +43,24 @@ namespace GA.GArkanoid
 				EffectPlayer = this.GetNode<EffectPlayer>();
 			}
 
-			// Initialize Blocks
-			foreach (Block block in this.GetNodesInChildren<Block>())
-			{
-				_blockCount++;
+			IList<Block> blocks = this.GetNodesInChildren<Block>();
 
-				block.BlockDestroyed += OnBlockDestroyed;
+			// Load the level
+			if (GameManager.Instance.LoadedLevelData != null)
+			{
+				Load(GameManager.Instance.LoadedLevelData);
+				GameManager.Instance.LoadedLevelData = null;
+			}
+
+			// Initialize Blocks
+			foreach (Block block in blocks)
+			{
+				if (block.IsEnabled)
+				{
+					_blockCount++;
+
+					block.BlockDestroyed += OnBlockDestroyed;
+				}
 			}
 		}
 
@@ -65,6 +79,11 @@ namespace GA.GArkanoid
 			if (Input.IsActionJustPressed(Config.PauseAction))
 			{
 				GameManager.Instance.ChangeState(States.StateType.Pause);
+			}
+
+			if (Input.IsActionJustPressed(Config.QuickSaveAction))
+			{
+				GameManager.Instance.Save(Config.QuickSaveName);
 			}
 
 			if (Input.IsActionJustPressed("AutoWin"))
@@ -129,12 +148,36 @@ namespace GA.GArkanoid
 
 		public Dictionary Save()
 		{
-			throw new System.NotImplementedException();
+			Dictionary ballData = CurrentBall.Save();
+			Dictionary paddleData = CurrentPaddle.Save();
+
+			Dictionary blockData = new Dictionary();
+			foreach (Block block in this.GetNodesInChildren<Block>(recursive: true))
+			{
+				blockData[block.GUID] = block.IsEnabled;
+			}
+
+			Dictionary levelData = new Dictionary();
+			levelData["Ball"] = ballData;
+			levelData["Paddle"] = paddleData;
+			levelData["Blocks"] = blockData;
+
+			return levelData;
 		}
 
 		public void Load(Dictionary data)
 		{
-			throw new System.NotImplementedException();
+			Dictionary blockData = (Dictionary)data["Blocks"];
+			IList<Block> blocks = this.GetNodesInChildren<Block>();
+			// Restore level data.
+			foreach (Block block in blocks)
+			{
+				bool isEnabled = blockData.TryGetValue(block.GUID, out Variant value) && (bool)value;
+				block.IsEnabled = isEnabled;
+			}
+
+			CurrentBall.Load((Dictionary)data["Ball"]);
+			CurrentPaddle.Load((Dictionary)data["Paddle"]);
 		}
 	}
 }

@@ -103,12 +103,25 @@ namespace GA.GArkanoid
 
 		public Dictionary Save()
 		{
-			throw new NotImplementedException();
+			Dictionary positionData = new Dictionary
+			{
+				{"X", GlobalPosition.X},
+				{"Y", GlobalPosition.Y}
+			};
+
+			Dictionary paddleData = new Dictionary();
+			paddleData["Speed"] = _speed;
+			paddleData["Position"] = positionData;
+
+			return paddleData;
 		}
 
 		public void Load(Dictionary data)
 		{
-			throw new NotImplementedException();
+			_speed = (float)data["Speed"];
+
+			Dictionary positionData = (Dictionary)data["Position"];
+			GlobalPosition = new Vector2((float)positionData["X"], (float)positionData["Y"]);
 		}
 		#endregion Private implementation
 	}

@@ -9,6 +9,7 @@ size = Vector2(64, 32)
 [node name="Block" type="StaticBody2D"]
 collision_layer = 4
 script = ExtResource("1_x55lh")
+GUID = "90180e48-0cb4-4637-85c1-8d677ec03f59"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("RectangleShape2D_rjsgv")

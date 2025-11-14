@@ -19,11 +19,14 @@ namespace GA.GArkanoid.UI
 		[Export]
 		private Button _quitButton = null;
 
+		[Export] private Button _loadButton = null;
+
 		public override void _EnterTree()
 		{
 			_newGameButton.Pressed += OnNewGame;
 			_settingsButton.Pressed += OnSettings;
 			_quitButton.Pressed += OnQuit;
+			_loadButton.Pressed += OnLoadGame;
 		}
 
 		public override void _ExitTree()
@@ -31,6 +34,7 @@ namespace GA.GArkanoid.UI
 			_newGameButton.Pressed -= OnNewGame;
 			_settingsButton.Pressed -= OnSettings;
 			_quitButton.Pressed -= OnQuit;
+			_loadButton.Pressed -= OnLoadGame;
 		}
 
 		private void OnQuit()
@@ -47,6 +51,18 @@ namespace GA.GArkanoid.UI
 		{
 			GameManager.Instance.Reset();
 			GameManager.Instance.ChangeState(StateType.Game);
+		}
+
+		private void OnLoadGame()
+		{
+			if (GameManager.Instance.Load(Config.QuickSaveName))
+			{
+				GameManager.Instance.ChangeState(StateType.Game);
+			}
+			else
+			{
+				GD.PrintErr("Error while loading game");
+			}
 		}
 	}
 }
