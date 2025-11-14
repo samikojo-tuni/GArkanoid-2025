@@ -1,6 +1,7 @@
 // © 2025 Sami Kojo <sami.kojo@tuni.fi>
 // License: 3-Clause BSD License (See the project root folder for details).
 
+using GA.Common;
 using GA.GArkanoid.Systems;
 using Godot;
 
@@ -31,6 +32,11 @@ namespace GA.GArkanoid
 			// TODO: Will this work when loading a new level?
 			GameManager.Instance.Reset();
 			LoadLevel(GameManager.Instance.LevelIndex);
+
+			if (EffectPlayer == null)
+			{
+				EffectPlayer = this.GetNode<EffectPlayer>();
+			}
 		}
 
 		public override void _EnterTree()

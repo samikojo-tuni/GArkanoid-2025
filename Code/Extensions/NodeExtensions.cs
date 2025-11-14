@@ -1,13 +1,80 @@
 // © 2025 Sami Kojo <sami.kojo@tuni.fi>
 // License: 3-Clause BSD License (See the project root folder for details).
 
-using Godot;
 using System;
+using System.Collections.Generic;
+using Godot;
 
 namespace GA.Common
 {
 	public static class NodeExtensions
 	{
+		/// <summary>
+		/// Gets a child node of the specified type.
+		/// </summary>
+		/// <typeparam name="TNode">The type of the child node to retrieve.</typeparam>
+		/// <param name="parent">The parent node to search within (not included in the search).</param>
+		/// <param name="recursive">Should the search include children's descendants?</param>
+		/// <returns>The first child node of the specified type, or null if not found.</returns>
+		public static TNode GetNode<TNode>(this Node parent, bool recursive = true)
+			where TNode : Node
+		{
+			int childCount = parent.GetChildCount();
+
+			for (int i = 0; i < childCount; ++i)
+			{
+				Node child = parent.GetChild(i);
+
+				if (child is TNode result)
+				{
+					return result;
+				}
+
+				if (recursive && child.GetChildCount() > 0)
+				{
+					TNode recursiveResult = GetNode<TNode>(child, recursive);
+					if (recursiveResult != null)
+					{
+						return recursiveResult;
+					}
+				}
+			}
+
+			return null;
+		}
+
+		/// <summary>
+		/// Gets all child nodes of the specified type.
+		/// </summary>
+		/// <typeparam name="TNode">The type of the child nodes to retrieve.</typeparam>
+		/// <param name="parent">The parent node to search within (not included in the search).</param>
+		/// <param name="recursive">Should the search include children's descendants?</param>
+		/// <returns>A list of all child nodes of the specified type (empty list if no child nodes found).
+		/// </returns>
+		public static IList<TNode> GetNodesInChildren<TNode>(this Node parent, bool recursive = true)
+			where TNode : Node
+		{
+			List<TNode> results = new List<TNode>();
+			int childCount = parent.GetChildCount();
+
+			for (int i = 0; i < childCount; i++)
+			{
+				Node child = parent.GetChild(i);
+
+				if (child is TNode result)
+				{
+					results.Add(result);
+				}
+
+				if (recursive && child.GetChildCount() > 0)
+				{
+					results.AddRange(GetNodesInChildren<TNode>(child, recursive));
+				}
+			}
+
+			return results;
+		}
+
 		/// <summary>
 		/// Returns the half of rectangle's size.
 		/// </summary>
