@@ -4,9 +4,9 @@
 
 [resource]
 script = ExtResource("1_d18ih")
-_lives = 3
-BallSpeed = 50.0
-LaunchDirection = Vector2(1, 1)
+_lives = 5
+BallSpeed = 100.0
+LaunchDirection = Vector2(1, -1)
 PaddleWidth = 1.0
-PaddleSpeed = 50.0
+PaddleSpeed = 100.0
 metadata/_custom_type_script = "uid://oyru5q6ww4ut"

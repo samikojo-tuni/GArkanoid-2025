@@ -2,12 +2,14 @@
 // License: 3-Clause BSD License (See the project root folder for details).
 
 using System;
+using GA.GArkanoid.Save;
 using GA.GArkanoid.Systems;
 using Godot;
+using Godot.Collections;
 
 namespace GA.GArkanoid
 {
-	public partial class Paddle : CharacterBody2D
+	public partial class Paddle : CharacterBody2D, ISave
 	{
 		private float _horizontalInput = 0.0f;
 		private float _mouseInput = 0.0f;
@@ -97,6 +99,16 @@ namespace GA.GArkanoid
 			Rect2 viewPortRect = GetViewport().GetVisibleRect();
 			_minX = (int)viewPortRect.Position.X;
 			_maxX = (int)viewPortRect.End.X;
+		}
+
+		public Dictionary Save()
+		{
+			throw new NotImplementedException();
+		}
+
+		public void Load(Dictionary data)
+		{
+			throw new NotImplementedException();
 		}
 		#endregion Private implementation
 	}

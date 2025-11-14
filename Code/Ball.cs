@@ -2,12 +2,14 @@
 // License: 3-Clause BSD License (See the project root folder for details).
 
 using System;
+using GA.GArkanoid.Save;
 using GA.GArkanoid.Systems;
 using Godot;
+using Godot.Collections;
 
 namespace GA.GArkanoid
 {
-	public partial class Ball : CharacterBody2D
+	public partial class Ball : CharacterBody2D, ISave
 	{
 		public float Speed { get; private set; } = 0.0f;
 
@@ -81,6 +83,16 @@ namespace GA.GArkanoid
 			Speed = 0;
 			Direction = Vector2.Zero;
 			Velocity = Vector2.Zero;
+		}
+
+		public Dictionary Save()
+		{
+			throw new NotImplementedException();
+		}
+
+		public void Load(Dictionary data)
+		{
+			throw new NotImplementedException();
 		}
 	}
 }

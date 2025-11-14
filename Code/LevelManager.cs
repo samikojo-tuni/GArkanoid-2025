@@ -2,12 +2,14 @@
 // License: 3-Clause BSD License (See the project root folder for details).
 
 using GA.Common;
+using GA.GArkanoid.Save;
 using GA.GArkanoid.Systems;
 using Godot;
+using Godot.Collections;
 
 namespace GA.GArkanoid
 {
-	public partial class LevelManager : Node2D
+	public partial class LevelManager : Node2D, ISave
 	{
 		private const string LevelContentPath = "res://Scenes/LevelContent";
 		private const string LevelContentName = "Level";
@@ -123,6 +125,16 @@ namespace GA.GArkanoid
 			{
 				GameManager.Instance.ChangeState(States.StateType.Win);
 			}
+		}
+
+		public Dictionary Save()
+		{
+			throw new System.NotImplementedException();
+		}
+
+		public void Load(Dictionary data)
+		{
+			throw new System.NotImplementedException();
 		}
 	}
 }

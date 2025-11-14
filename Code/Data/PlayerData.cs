@@ -1,9 +1,11 @@
+using GA.GArkanoid.Save;
 using Godot;
+using Godot.Collections;
 
 namespace GA.GArkanoid.Data
 {
 	[GlobalClass]
-	public partial class PlayerData : Resource
+	public partial class PlayerData : Resource, ISave
 	{
 		[Signal] public delegate void LivesChangedEventHandler(int lives);
 		[Signal] public delegate void ScoreChangedEventHandler(int score);
@@ -47,6 +49,16 @@ namespace GA.GArkanoid.Data
 			{
 				Lives--;
 			}
+		}
+
+		public Dictionary Save()
+		{
+			throw new System.NotImplementedException();
+		}
+
+		public void Load(Dictionary data)
+		{
+			throw new System.NotImplementedException();
 		}
 	}
 }
