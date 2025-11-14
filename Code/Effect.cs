@@ -55,13 +55,10 @@ namespace GA.GArkanoid
 			_effectCount--;
 			if (_effectCount <= 0)
 			{
-				CleanUp();
+				// TODO: Instead of destroying the object, we should pool inactive objects and reuse them.
+				// Will be implemented suring the spring.
+				QueueFree();
 			}
-		}
-
-		private void CleanUp()
-		{
-			QueueFree();
 		}
 	}
 }

@@ -41,11 +41,10 @@ script = ExtResource("12_bktio")
 _entries = Array[Object]([SubResource("Resource_nrlyp"), SubResource("Resource_bktio"), SubResource("Resource_pmxqn")])
 metadata/_custom_type_script = "uid://c0gvrabxk3u68"
 
-[node name="Level" type="Node2D" node_paths=PackedStringArray("CurrentBall", "CurrentPaddle", "EffectPlayer")]
+[node name="Level" type="Node2D" node_paths=PackedStringArray("CurrentBall", "CurrentPaddle")]
 script = ExtResource("1_5rrr5")
 CurrentBall = NodePath("Ball")
 CurrentPaddle = NodePath("Paddle")
-EffectPlayer = NodePath("EffectPlayer")
 
 [node name="Paddle" parent="." instance=ExtResource("1_0ba56")]
 position = Vector2(323, 305)

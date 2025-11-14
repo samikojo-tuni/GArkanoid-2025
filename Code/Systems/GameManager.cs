@@ -3,6 +3,7 @@
 
 using System.Collections.Generic;
 using GA.Common.Godot;
+using GA.GArkanoid.Data;
 using GA.GArkanoid.States;
 using Godot;
 
@@ -35,6 +36,8 @@ namespace GA.GArkanoid.Systems
 		private int _score = 0;
 		private int _lives = 0;
 		private SceneTree _sceneTree = null;
+		private AudioStreamPlayer _musicPlayer = null;
+		private MusicData _musicData = null;
 
 		private List<GameStateBase> _gameStates = new List<GameStateBase>()
 		{
@@ -103,6 +106,14 @@ namespace GA.GArkanoid.Systems
 		{
 			GD.Print("GameManager initialized!");
 			MinWindowSize = GetWindow().Size;
+
+			// Initialize audio
+			_musicPlayer = new AudioStreamPlayer();
+			_musicPlayer.Bus = Config.MusicBusName;
+			_musicPlayer.ProcessMode = ProcessModeEnum.Always; // Make sure audio can be played while paused
+			AddChild(_musicPlayer);
+
+			_musicData = GD.Load<MusicData>(Config.MusicDataPath);
 		}
 
 		public void Reset()
@@ -158,6 +169,48 @@ namespace GA.GArkanoid.Systems
 		public void TogglePause()
 		{
 			SceneTree.Paused = !SceneTree.Paused;
+		}
+
+		/// <summary>
+		/// Plays the appropriate music track for the given state.
+		/// </summary>
+		/// <param name="stateType">The state to play music for.</param>
+		public void PlayMusic(StateType stateType)
+		{
+			if (_musicPlayer == null || _musicData == null)
+			{
+				// Can't play anything.
+				return;
+			}
+
+			AudioStream audioStream = _musicData.GetMusicForState(stateType);
+			if (audioStream == null)
+			{
+				// No music defined for the state.
+				return;
+			}
+
+			if (_musicPlayer.Stream == audioStream && _musicPlayer.Playing)
+			{
+				// The correct track is already playing.7
+				return;
+			}
+
+			_musicPlayer.Stream = audioStream;
+			_musicPlayer.Play();
+		}
+
+		/// <summary>
+		/// Stops the currently playing music.
+		/// </summary>
+		public void StopMusic()
+		{
+			if (_musicPlayer == null)
+			{
+				return;
+			}
+
+			_musicPlayer.Stop();
 		}
 
 		#region State machine

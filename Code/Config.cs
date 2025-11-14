@@ -22,5 +22,12 @@ namespace GA.GArkanoid
 		public static int InitialLives = 3;
 		public static int InitialScore = 0;
 		#endregion Player data
+
+		#region Audio
+		public static StringName MasterBusName = "Master";
+		public static StringName MusicBusName = "Music";
+		public static StringName SFXBusName = "SFX";
+		public static string MusicDataPath = "res://Config/MusicData.tres";
+		#endregion
 	}
 }
