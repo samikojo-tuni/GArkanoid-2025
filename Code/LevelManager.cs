@@ -13,6 +13,8 @@ namespace GA.GArkanoid
 		private const string LevelContentName = "Level";
 		private const string LevelContentExtension = ".tscn";
 
+		private int _blockCount = 0;
+
 		[Export]
 		public Ball CurrentBall { get; private set; } = null;
 
@@ -29,13 +31,20 @@ namespace GA.GArkanoid
 		public override void _Ready()
 		{
 			Active = this;
-			// TODO: Will this work when loading a new level?
-			GameManager.Instance.Reset();
+
 			LoadLevel(GameManager.Instance.LevelIndex);
 
 			if (EffectPlayer == null)
 			{
 				EffectPlayer = this.GetNode<EffectPlayer>();
+			}
+
+			// Initialize Blocks
+			foreach (Block block in this.GetNodesInChildren<Block>())
+			{
+				_blockCount++;
+
+				block.BlockDestroyed += OnBlockDestroyed;
 			}
 		}
 
@@ -54,6 +63,14 @@ namespace GA.GArkanoid
 			if (Input.IsActionJustPressed(Config.PauseAction))
 			{
 				GameManager.Instance.ChangeState(States.StateType.Pause);
+			}
+
+			if (Input.IsActionJustPressed("AutoWin"))
+			{
+				foreach (Block block in this.GetNodesInChildren<Block>())
+				{
+					block.Hit();
+				}
 			}
 		}
 
@@ -93,6 +110,18 @@ namespace GA.GArkanoid
 			{
 				// Game over
 				GameManager.Instance.ChangeState(States.StateType.GameOver);
+			}
+		}
+
+		private void OnBlockDestroyed(Block block)
+		{
+			block.BlockDestroyed -= OnBlockDestroyed;
+			_blockCount--;
+
+			// One one level exists, win when all blocks are destroyed.
+			if (_blockCount <= 0)
+			{
+				GameManager.Instance.ChangeState(States.StateType.Win);
 			}
 		}
 	}

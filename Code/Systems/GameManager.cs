@@ -2,6 +2,7 @@
 // License: 3-Clause BSD License (See the project root folder for details).
 
 using System.Collections.Generic;
+using GA.Common;
 using GA.Common.Godot;
 using GA.GArkanoid.Data;
 using GA.GArkanoid.States;
@@ -33,8 +34,6 @@ namespace GA.GArkanoid.Systems
 		[Signal]
 		public delegate void GameResetEventHandler();
 
-		private int _score = 0;
-		private int _lives = 0;
 		private SceneTree _sceneTree = null;
 		private AudioStreamPlayer _musicPlayer = null;
 		private MusicData _musicData = null;
@@ -46,7 +45,7 @@ namespace GA.GArkanoid.Systems
 			new GameOverState(),
 			new SettingsState(),
 			new PauseState(),
-// TODO: Add all the rest as well.
+			new WinState(),
 		};
 
 		private Stack<GameStateBase> _loadedStates = new Stack<GameStateBase>();
@@ -58,11 +57,11 @@ namespace GA.GArkanoid.Systems
 
 		public int Score
 		{
-			get { return _score; }
+			get { return CurrentPlayerData.Score; }
 			private set
 			{
-				_score = Mathf.Clamp(value, 0, int.MaxValue);
-				EmitSignal(SignalName.ScoreChanged, _score);
+				CurrentPlayerData.Score = value;
+				EmitSignal(SignalName.ScoreChanged, Score);
 
 				GD.Print($"Score: {Score}");
 			}
@@ -70,11 +69,11 @@ namespace GA.GArkanoid.Systems
 
 		public int Lives
 		{
-			get { return _lives; }
+			get { return CurrentPlayerData.Lives; }
 			set
 			{
-				_lives = Mathf.Clamp(value, 0, Config.MaxLives);
-				EmitSignal(SignalName.LivesChanged, _lives);
+				CurrentPlayerData.Lives = value;
+				EmitSignal(SignalName.LivesChanged, Lives);
 
 				GD.Print($"Lives: {Lives}");
 			}
@@ -83,9 +82,9 @@ namespace GA.GArkanoid.Systems
 		// TODO: Add a signal to indicate the level change
 		public int LevelIndex
 		{
-			get;
-			private set;
-		} = 1;
+			get { return CurrentPlayerData.LevelIndex; }
+			private set { CurrentPlayerData.LevelIndex = value; }
+		}
 
 		public SceneTree SceneTree
 		{
@@ -102,6 +101,9 @@ namespace GA.GArkanoid.Systems
 			}
 		}
 
+		public PlayerData DefaultPlayerData { get; private set; } = null;
+		public PlayerData CurrentPlayerData { get; private set; } = null;
+
 		protected override void Initialize()
 		{
 			GD.Print("GameManager initialized!");
@@ -114,13 +116,14 @@ namespace GA.GArkanoid.Systems
 			AddChild(_musicPlayer);
 
 			_musicData = GD.Load<MusicData>(Config.MusicDataPath);
+
+			DefaultPlayerData = GD.Load<PlayerData>(Config.DefaultPlayerDataPath);
 		}
 
 		public void Reset()
 		{
-			Lives = Config.InitialLives;
-			Score = Config.InitialScore;
-			LevelIndex = 1;
+			CurrentPlayerData = DefaultPlayerData.Duplicate<PlayerData>(deepCopy: true);
+			// Copy default PlayerData and make that our Current PlayerData.
 			EmitSignal(SignalName.GameReset);
 		}
 

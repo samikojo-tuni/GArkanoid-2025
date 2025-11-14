@@ -12,15 +12,10 @@ namespace GA.GArkanoid
 		public static StringName LaunchAction = "Launch";
 		public static StringName PauseAction = "Pause";
 
-		#region Initial ball settings
-		public const float BallSpeed = 100f;
-		public static Vector2 BallDirection = new Vector2(1, -1).Normalized();
-		#endregion Initial ball settings
 
 		#region Player data
 		public static int MaxLives = 100;
-		public static int InitialLives = 3;
-		public static int InitialScore = 0;
+		public static string DefaultPlayerDataPath = "res://Config/DefaultPlayerData.tres";
 		#endregion Player data
 
 		#region Audio

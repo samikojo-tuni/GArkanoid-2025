@@ -2,6 +2,7 @@
 // License: 3-Clause BSD License (See the project root folder for details).
 
 using System;
+using GA.GArkanoid.Systems;
 using Godot;
 
 namespace GA.GArkanoid
@@ -13,6 +14,7 @@ namespace GA.GArkanoid
 		private int _minX = 0;
 		private int _maxX = 0;
 		private Sprite2D _sprite = null;
+		private float _speed = 0;
 
 		/// <summary>
 		/// The position on top of the paddle where the ball
@@ -21,13 +23,6 @@ namespace GA.GArkanoid
 		[Export]
 		private Node2D _ballLaunchPoint = null;
 
-		/// <summary>
-		/// The speed of the paddle (pixels / second);
-		/// </summary>
-		/// <value></value>
-		[Export]
-		public float Speed { get; set; } = 100f;
-
 		public Ball CurrentBall { get { return LevelManager.Active.CurrentBall; } }
 
 		#region Public Interface
@@ -35,6 +30,8 @@ namespace GA.GArkanoid
 		{
 			_sprite = GetNode<Sprite2D>("CollisionShape2D/PaddleSprite");
 			UpdateWorldBounds();
+
+			_speed = GameManager.Instance.CurrentPlayerData.PaddleSpeed;
 		}
 
 		public override void _Process(double delta)
@@ -57,7 +54,8 @@ namespace GA.GArkanoid
 
 			if (CurrentBall != null && @event.IsActionPressed(Config.LaunchAction))
 			{
-				CurrentBall.Launch(Config.BallSpeed, Config.BallDirection);
+				CurrentBall.Launch(GameManager.Instance.CurrentPlayerData.BallSpeed,
+					GameManager.Instance.CurrentPlayerData.LaunchDirection.Normalized());
 			}
 		}
 
@@ -71,7 +69,7 @@ namespace GA.GArkanoid
 			{
 				// There is no mouse movement, let's poll horizontal axis instead.
 				Vector2 movement = new Vector2(_horizontalInput, 0f);
-				movement *= Speed * (float)delta;
+				movement *= _speed * (float)delta;
 				MoveAndCollide(movement);
 
 				// "Consume" the input. Otherwise this could work incorrectly e.g. in the case when user's

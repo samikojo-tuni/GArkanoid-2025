@@ -45,6 +45,7 @@ namespace GA.GArkanoid.UI
 
 		private void OnNewGame()
 		{
+			GameManager.Instance.Reset();
 			GameManager.Instance.ChangeState(StateType.Game);
 		}
 	}

@@ -105,5 +105,24 @@ namespace GA.Common
 
 			return new Rect2(topLeft, scaledSize);
 		}
+
+		/// <summary>
+		/// The typed version of Resource's Duplicate method.
+		/// </summary>
+		/// <typeparam name="TResource">The type of the resource to duplicate.</typeparam>
+		/// <param name="resource">The resource to duplicate.</param>
+		/// <param name="deepCopy">If true, a deep copy is performed. Otherwise, a shallow copy is made.
+		/// </param>
+		/// <returns>The duplicated resource, or null if the original was null.</returns>
+		public static TResource Duplicate<TResource>(this TResource resource, bool deepCopy = false)
+			where TResource : Resource
+		{
+			if (resource == null)
+			{
+				return null;
+			}
+
+			return resource.Duplicate(subresources: deepCopy) as TResource;
+		}
 	}
 }

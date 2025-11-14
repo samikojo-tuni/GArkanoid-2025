@@ -9,6 +9,9 @@ namespace GA.GArkanoid
 {
 	public partial class Block : StaticBody2D
 	{
+		[Signal]
+		public delegate void BlockDestroyedEventHandler(Block block);
+
 		[Export]
 		private Color _blockColor = Colors.White;
 
@@ -31,10 +34,12 @@ namespace GA.GArkanoid
 		public void Hit()
 		{
 			// TODO: Implement the Health system
-			QueueFree();
+			QueueFree(); // TODO: Don't actually destroy blocks for saving purposes!
 
 			// Access GameManager singleton using its Instance property.
 			GameManager.Instance.AddScore(_score);
+
+			EmitSignal(SignalName.BlockDestroyed, this);
 		}
 	}
 }
