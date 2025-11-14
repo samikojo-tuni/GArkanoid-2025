@@ -1,5 +1,6 @@
-using System;
-using System.Collections.Generic;
+// © 2025 Sami Kojo <sami.kojo@tuni.fi>
+// License: 3-Clause BSD License (See the project root folder for details).
+
 using GA.GArkanoid.Data;
 using Godot;
 

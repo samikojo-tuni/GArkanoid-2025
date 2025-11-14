@@ -1,3 +1,6 @@
+// © 2025 Sami Kojo <sami.kojo@tuni.fi>
+// License: 3-Clause BSD License (See the project root folder for details).
+
 using GA.GArkanoid.Systems;
 
 namespace GA.GArkanoid.States
