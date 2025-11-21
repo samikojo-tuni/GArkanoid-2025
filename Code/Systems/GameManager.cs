@@ -14,10 +14,10 @@ using Godot.Collections;
 /*
 GameManager
 
-- Switch scenes
+- Switch scenes (DONE)
 - Score keeping (DONE)
 - Lives (DONE)
-- Centralized access point to other managers / systems (TODO)
+- Centralized access point to other managers / systems (DONE)
 */
 namespace GA.GArkanoid.Systems
 {
@@ -86,7 +86,7 @@ namespace GA.GArkanoid.Systems
 		public int LevelIndex
 		{
 			get { return CurrentPlayerData.LevelIndex; }
-			private set { CurrentPlayerData.LevelIndex = value; }
+			set { CurrentPlayerData.LevelIndex = value; }
 		}
 
 		public SceneTree SceneTree
@@ -110,10 +110,14 @@ namespace GA.GArkanoid.Systems
 		// TODO: A bit hacky solution. Figure out something better.
 		public Dictionary LoadedLevelData { get; set; }
 
+		public Settings Settings { get; private set; }
+
 		protected override void Initialize()
 		{
 			GD.Print("GameManager initialized!");
 			MinWindowSize = GetWindow().Size;
+
+			Settings = new Settings();
 
 			// Initialize audio
 			_musicPlayer = new AudioStreamPlayer();
@@ -332,7 +336,7 @@ namespace GA.GArkanoid.Systems
 
 		#region State machine
 
-		public bool ChangeState(StateType stateType)
+		public bool ChangeState(StateType stateType, bool forceLoad = false)
 		{
 			if (ActiveState == null)
 			{
@@ -388,7 +392,7 @@ namespace GA.GArkanoid.Systems
 				_loadedStates.Push(nextState);
 			}
 
-			nextState.OnEnter();
+			nextState.OnEnter(forceLoad);
 
 			return true;
 		}

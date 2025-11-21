@@ -17,6 +17,7 @@ namespace GA.GArkanoid
 		#region Player data
 		public static int MaxLives = 100;
 		public static string DefaultPlayerDataPath = "res://Config/DefaultPlayerData.tres";
+		public const int LevelCount = 2;
 		#endregion Player data
 
 		#region Audio
@@ -24,6 +25,13 @@ namespace GA.GArkanoid
 		public static StringName MusicBusName = "Music";
 		public static StringName SFXBusName = "SFX";
 		public static string MusicDataPath = "res://Config/MusicData.tres";
+
+		public static string MusicSettingsKey = "Music";
+		public static string SFXSettingsKey = "SFX";
+		public static string MasterSettingsKey = "Master";
+		public static string ResolutionWidthKey = "ResolutionX";
+		public static string ResolutionHeightKey = "ResolutionY";
+		public static string FullscreenKey = "Fullscreen";
 		#endregion Audio
 
 		#region Save
@@ -33,6 +41,8 @@ namespace GA.GArkanoid
 		public static string PlayerDataKey = "PlayerData";
 		public static string LevelDataKey = "LevelData";
 		public static StringName QuickSaveAction = "QuickSave";
+
+		public static string SettingsPath = "user://Settings/settings.cfg";
 
 		public static string GetSaveFolderPath()
 		{

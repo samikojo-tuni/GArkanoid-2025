@@ -46,7 +46,7 @@ namespace GA.GArkanoid
 			{
 				if (string.IsNullOrWhiteSpace(GUID))
 				{
-					GUID = Guid.NewGuid().ToString();
+					SetGUID(Guid.NewGuid().ToString());
 					GD.Print($"Created a new GUID for the object {this.Name}");
 				}
 			}
@@ -71,6 +71,12 @@ namespace GA.GArkanoid
 			GameManager.Instance.AddScore(_score);
 
 			EmitSignal(SignalName.BlockDestroyed, this);
+		}
+
+		public void SetGUID(string guid)
+		{
+			GUID = guid;
+			NotifyPropertyListChanged();
 		}
 	}
 }

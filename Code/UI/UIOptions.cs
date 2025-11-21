@@ -40,10 +40,15 @@ namespace GA.GArkanoid.UI
 		[Export] private string _sfxBusDisplayName = null;
 		private Dictionary<int, Resolution> _resolutions = new Dictionary<int, Resolution>();
 
+		private SettingsData _settingsData = null;
+
 		public override void _Ready()
 		{
-			InitializeAudioControls();
-			InitializeVideoControls();
+			// Copy the current settings data as a start point.
+			_settingsData = new SettingsData(GameManager.Instance.Settings.Data);
+
+			InitializeAudioControls(_settingsData);
+			InitializeVideoControls(_settingsData);
 		}
 
 		public override void _EnterTree()
@@ -57,6 +62,7 @@ namespace GA.GArkanoid.UI
 			_sfxControl.VolumeChanged += OnVolumeChanged;
 
 			_fullscreenToggle.Toggled += OnFullScreenToggled;
+			_resolutionDropdown.ItemSelected += OnResolutionSelected;
 		}
 
 		public override void _ExitTree()
@@ -70,9 +76,18 @@ namespace GA.GArkanoid.UI
 			_sfxControl.VolumeChanged -= OnVolumeChanged;
 
 			_fullscreenToggle.Toggled -= OnFullScreenToggled;
+			_resolutionDropdown.ItemSelected -= OnResolutionSelected;
 		}
 
-		private void InitializeAudioControls()
+		private void OnResolutionSelected(long index)
+		{
+			if (_resolutions.TryGetValue((int)index, out Resolution selected))
+			{
+				_settingsData.Resolution = (Vector2I)selected;
+			}
+		}
+
+		private void InitializeAudioControls(SettingsData data)
 		{
 			bool result = true;
 			result = result && SetupAudioControl(_masterControl, _masterBusName, _masterBusDisplayName);
@@ -85,13 +100,14 @@ namespace GA.GArkanoid.UI
 			}
 		}
 
-		private void InitializeVideoControls()
+		private void InitializeVideoControls(SettingsData data)
 		{
 			Vector2I viewportSize = GameManager.MinWindowSize;
 			int currentScreen = DisplayServer.WindowGetCurrentScreen();
 			Vector2I screenSize = DisplayServer.ScreenGetSize(currentScreen);
 			int multiplyer = 1;
 			int id = 0;
+			int selected = 0;
 
 			while (GetWidth(viewportSize, multiplyer) <= screenSize.X &&
 				GetHeight(viewportSize, multiplyer) <= screenSize.Y)
@@ -104,6 +120,11 @@ namespace GA.GArkanoid.UI
 					Multiplyer = multiplyer,
 				};
 
+				if ((Vector2I)resolution == data.Resolution)
+				{
+					selected = id;
+				}
+
 				_resolutions.Add(id, resolution);
 				_resolutionDropdown.AddItem(resolution.ToString(), id);
 
@@ -111,8 +132,8 @@ namespace GA.GArkanoid.UI
 				id++;
 			}
 
-			// TODO: Read the correct resolution from settings.
-			// TODO: Same for the fullscreen toggle.
+			_resolutionDropdown.Select(selected);
+			_fullscreenToggle.ButtonPressed = data.IsFullscreen;
 		}
 
 		private static int GetWidth(Vector2I viewportSize, int multiplyer)
@@ -140,15 +161,23 @@ namespace GA.GArkanoid.UI
 
 		private void OnFullScreenToggled(bool toggledOn)
 		{
+			_settingsData.IsFullscreen = toggledOn;
 			_resolutionDropdown.Disabled = toggledOn;
 		}
 
 		private void OnVolumeChanged(string busName, float decibel)
 		{
-			int index = AudioServer.GetBusIndex(busName);
-			if (index >= 0)
+			if (busName == Config.MasterBusName)
 			{
-				AudioServer.SetBusVolumeDb(index, decibel);
+				_settingsData.MasterVolume = decibel;
+			}
+			else if (busName == Config.MusicBusName)
+			{
+				_settingsData.MusicVolume = decibel;
+			}
+			else if (busName == Config.SFXBusName)
+			{
+				_settingsData.SFXVolume = decibel;
 			}
 		}
 
@@ -159,46 +188,19 @@ namespace GA.GArkanoid.UI
 
 		private void OnCancelPressed()
 		{
-			DiscardChanges();
 			CloseSettings();
 		}
 
 		private void OnOKPressed()
 		{
-			ApplySettings();
 			SaveSettings();
 			CloseSettings();
 		}
 
-		private void ApplySettings()
-		{
-			// Set the resolution
-			int resolutionIndex = _resolutionDropdown.Selected;
-			if (resolutionIndex < 0)
-			{
-				// Nothing selected
-				return;
-			}
-
-			Resolution resolution = _resolutions[resolutionIndex];
-			DisplayServer.WindowSetSize((Vector2I)resolution);
-
-			// Set window state
-			DisplayServer.WindowMode windowMode = _fullscreenToggle.ButtonPressed
-				? DisplayServer.WindowMode.Fullscreen
-				: DisplayServer.WindowMode.Windowed;
-
-			DisplayServer.WindowSetMode(windowMode);
-		}
-
 		private void SaveSettings()
 		{
-			// TODO: Implement saving settings!
-		}
-
-		private void DiscardChanges()
-		{
-			// TODO: Implement discarding settings!
+			GameManager.Instance.Settings.Data = _settingsData;
+			GameManager.Instance.Settings.Save();
 		}
 
 		private void CloseSettings()

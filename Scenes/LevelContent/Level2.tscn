@@ -1,0 +1,197 @@
+[gd_scene load_steps=3 format=3 uid="uid://bc6k775khvoif"]
+
+[ext_resource type="Script" uid="uid://blyk8lqn2thfi" path="res://Code/Editor/ResetGUIDs.cs" id="1_brw4q"]
+[ext_resource type="PackedScene" uid="uid://bgpobuvtvmodb" path="res://Scenes/Block.tscn" id="2_pwhyn"]
+
+[node name="LevelLayout" type="Node2D"]
+script = ExtResource("1_brw4q")
+
+[node name="Block" parent="." instance=ExtResource("2_pwhyn")]
+position = Vector2(119, 102)
+_score = 20
+GUID = "b5b5db7d-7176-4cb8-a662-6ce7ad8a7ff1"
+
+[node name="Block2" parent="." instance=ExtResource("2_pwhyn")]
+position = Vector2(185, 102)
+_score = 20
+GUID = "cc742775-cc6d-4f10-9073-b27228ea37fc"
+
+[node name="Block3" parent="." instance=ExtResource("2_pwhyn")]
+position = Vector2(251, 102)
+_score = 20
+GUID = "07caf016-1048-4a9b-8c24-0c54388a6eb7"
+
+[node name="Block4" parent="." instance=ExtResource("2_pwhyn")]
+position = Vector2(317, 102)
+_score = 20
+GUID = "bd1e8187-fa7f-49db-9623-22da01b8e14e"
+
+[node name="Block5" parent="." instance=ExtResource("2_pwhyn")]
+position = Vector2(383, 102)
+_score = 20
+GUID = "512b2ce1-6184-4e5f-b207-a92ff877a2e3"
+
+[node name="Block6" parent="." instance=ExtResource("2_pwhyn")]
+position = Vector2(449, 102)
+_score = 20
+GUID = "fc37d0ec-ba9d-4237-b00f-258e23a65297"
+
+[node name="Block7" parent="." instance=ExtResource("2_pwhyn")]
+position = Vector2(515, 102)
+_score = 20
+GUID = "dd3a84be-87cb-4430-8e5e-fcf4e64686b3"
+
+[node name="Block8" parent="." instance=ExtResource("2_pwhyn")]
+position = Vector2(88, 136)
+_score = 20
+GUID = "6575a7a2-eb63-4dce-89ec-6109d8898aa1"
+
+[node name="Block9" parent="." instance=ExtResource("2_pwhyn")]
+position = Vector2(154, 136)
+_score = 20
+GUID = "cdad906a-9c20-4528-bc0c-c658e2777213"
+
+[node name="Block10" parent="." instance=ExtResource("2_pwhyn")]
+position = Vector2(220, 136)
+_score = 20
+GUID = "fca1c248-f769-4ee2-94b4-227d38daa20d"
+
+[node name="Block11" parent="." instance=ExtResource("2_pwhyn")]
+position = Vector2(286, 136)
+_score = 20
+GUID = "0aa5ee41-6eaf-4cfb-89d9-adbf54890e41"
+
+[node name="Block12" parent="." instance=ExtResource("2_pwhyn")]
+position = Vector2(352, 136)
+_score = 20
+GUID = "3c5173dc-2307-4f93-bee9-a774d9ac227f"
+
+[node name="Block13" parent="." instance=ExtResource("2_pwhyn")]
+position = Vector2(418, 136)
+_score = 20
+GUID = "6c012187-e622-4edb-85ec-d7c859cc076f"
+
+[node name="Block14" parent="." instance=ExtResource("2_pwhyn")]
+position = Vector2(484, 136)
+_score = 20
+GUID = "8dbb4be4-a996-4e74-827b-d72adb3a3231"
+
+[node name="Block22" parent="." instance=ExtResource("2_pwhyn")]
+position = Vector2(550, 136)
+_score = 20
+GUID = "4188f2b1-220f-4fb3-b8c4-23aaa4780c66"
+
+[node name="Block23" parent="." instance=ExtResource("2_pwhyn")]
+position = Vector2(85, 204)
+_score = 20
+GUID = "360601ff-1c35-4420-88d4-4a7b57c875bd"
+
+[node name="Block24" parent="." instance=ExtResource("2_pwhyn")]
+position = Vector2(151, 204)
+_score = 20
+GUID = "5773be47-b476-42a1-a30f-70d90eacdf1f"
+
+[node name="Block25" parent="." instance=ExtResource("2_pwhyn")]
+position = Vector2(217, 204)
+_score = 20
+GUID = "229df9bf-4758-4974-af2b-261c1f2862e1"
+
+[node name="Block26" parent="." instance=ExtResource("2_pwhyn")]
+position = Vector2(283, 204)
+_score = 20
+GUID = "0b6461ab-919e-4578-9b5f-40c0912198ae"
+
+[node name="Block27" parent="." instance=ExtResource("2_pwhyn")]
+position = Vector2(349, 204)
+_score = 20
+GUID = "8d2ca1a5-9565-4f2d-bf46-b74cfb63da1d"
+
+[node name="Block28" parent="." instance=ExtResource("2_pwhyn")]
+position = Vector2(415, 204)
+_score = 20
+GUID = "8362114b-7f8c-4ee3-939a-18c8cf8c3e56"
+
+[node name="Block29" parent="." instance=ExtResource("2_pwhyn")]
+position = Vector2(481, 204)
+_score = 20
+GUID = "2a96d809-ebe5-4143-b026-4a910017a630"
+
+[node name="Block30" parent="." instance=ExtResource("2_pwhyn")]
+position = Vector2(547, 204)
+_score = 20
+GUID = "51ae71d1-40b6-47ef-846e-1c4008ee5b69"
+
+[node name="Block31" parent="." instance=ExtResource("2_pwhyn")]
+position = Vector2(78, 68)
+_score = 20
+GUID = "3cc90876-2886-4388-b815-8de2e7465d76"
+
+[node name="Block32" parent="." instance=ExtResource("2_pwhyn")]
+position = Vector2(144, 68)
+_score = 20
+GUID = "98ce2c57-30b7-444a-b2e2-6875a866d8b9"
+
+[node name="Block33" parent="." instance=ExtResource("2_pwhyn")]
+position = Vector2(210, 68)
+_score = 20
+GUID = "4c05c554-964f-45a3-a38e-a50ffbb96d03"
+
+[node name="Block34" parent="." instance=ExtResource("2_pwhyn")]
+position = Vector2(276, 68)
+_score = 20
+GUID = "f43d59a3-088e-4d99-aa54-63f4bc38be97"
+
+[node name="Block35" parent="." instance=ExtResource("2_pwhyn")]
+position = Vector2(342, 68)
+_score = 20
+GUID = "603e9654-3120-4b95-aae9-1f0a6951b271"
+
+[node name="Block36" parent="." instance=ExtResource("2_pwhyn")]
+position = Vector2(408, 68)
+_score = 20
+GUID = "26f29e40-0c56-4d4e-b968-12661073b527"
+
+[node name="Block37" parent="." instance=ExtResource("2_pwhyn")]
+position = Vector2(474, 68)
+_score = 20
+GUID = "9d849762-95aa-4596-bc1d-d8bc5dc832bd"
+
+[node name="Block38" parent="." instance=ExtResource("2_pwhyn")]
+position = Vector2(540, 68)
+_score = 20
+GUID = "4e236474-51f4-46f3-a0cf-adea5b11c53b"
+
+[node name="Block15" parent="." instance=ExtResource("2_pwhyn")]
+position = Vector2(117, 170)
+_score = 20
+GUID = "6352d1bf-9877-41c9-adea-03eaaed3d753"
+
+[node name="Block16" parent="." instance=ExtResource("2_pwhyn")]
+position = Vector2(183, 170)
+_score = 20
+GUID = "3fa5063b-4956-4d7a-bf87-105a0d3ea814"
+
+[node name="Block17" parent="." instance=ExtResource("2_pwhyn")]
+position = Vector2(249, 170)
+_score = 20
+GUID = "52c298d1-fb6d-4adb-a1de-76d1f3f75d59"
+
+[node name="Block18" parent="." instance=ExtResource("2_pwhyn")]
+position = Vector2(315, 170)
+_score = 20
+GUID = "6734a532-dc6e-4cf8-b057-117880042180"
+
+[node name="Block19" parent="." instance=ExtResource("2_pwhyn")]
+position = Vector2(381, 170)
+_score = 20
+GUID = "ffc3eb44-d3ec-416f-ac69-44863b848688"
+
+[node name="Block20" parent="." instance=ExtResource("2_pwhyn")]
+position = Vector2(447, 170)
+_score = 20
+GUID = "a216e1b4-3ee5-45ed-bfdc-ee81d692d6a6"
+
+[node name="Block21" parent="." instance=ExtResource("2_pwhyn")]
+position = Vector2(513, 170)
+_score = 20
+GUID = "2547bbb8-74a1-402f-873c-7b1072cf9660"

@@ -142,7 +142,15 @@ namespace GA.GArkanoid
 			// One one level exists, win when all blocks are destroyed.
 			if (_blockCount <= 0)
 			{
-				GameManager.Instance.ChangeState(States.StateType.Win);
+				GameManager.Instance.LevelIndex++;
+				if (GameManager.Instance.LevelIndex > Config.LevelCount)
+				{
+					GameManager.Instance.ChangeState(States.StateType.Win);
+				}
+				else
+				{
+					GameManager.Instance.ChangeState(States.StateType.Game);
+				}
 			}
 		}
 
