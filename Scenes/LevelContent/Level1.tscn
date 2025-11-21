@@ -130,6 +130,7 @@ GUID = "ffc3eb44-d3ec-416f-ac69-44863b848688"
 position = Vector2(440, 146)
 _blockColor = Color(1, 0, 0, 1)
 _score = 75
+_guaranteedPowerUp = 3
 GUID = "a216e1b4-3ee5-45ed-bfdc-ee81d692d6a6"
 
 [node name="Block21" parent="." instance=ExtResource("1_k1fx7")]

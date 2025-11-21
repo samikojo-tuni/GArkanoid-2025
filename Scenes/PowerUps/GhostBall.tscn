@@ -1,0 +1,10 @@
+[gd_scene load_steps=3 format=3 uid="uid://bkc07v0qmi27l"]
+
+[ext_resource type="PackedScene" uid="uid://c3mf8ug2g6ovq" path="res://Scenes/PowerUps/BasePowerUp.tscn" id="1_oom1l"]
+[ext_resource type="Texture2D" uid="uid://bgpm8xqvj7ela" path="res://Art/32/PowerUps/Powerup-Through.png" id="2_53fo8"]
+
+[node name="GhostBall" instance=ExtResource("1_oom1l")]
+Type = 2
+
+[node name="Sprite2D" parent="." index="1"]
+texture = ExtResource("2_53fo8")

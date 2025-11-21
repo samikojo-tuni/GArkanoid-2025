@@ -17,6 +17,8 @@ namespace GA.GArkanoid
 		// the ball is not moving.
 		public Vector2 Direction { get; private set; } = Vector2.Zero;
 
+		public bool IsGhost { get; set; } = false;
+
 		public bool IsLaunched
 		{
 			get { return !Direction.IsZeroApprox(); }
@@ -31,11 +33,13 @@ namespace GA.GArkanoid
 			}
 
 			KinematicCollision2D collisionData = MoveAndCollide(Velocity * (float)delta);
-			if (Bounce(collisionData))
+			bool shouldBounce = collisionData != null;
+			if (shouldBounce)
 			{
 				GodotObject collidedObject = collisionData.GetCollider();
 				if (collidedObject is Block block)
 				{
+					shouldBounce = !IsGhost;
 					LevelManager.Active.EffectPlayer.PlayEffect(EffectType.Hit, GlobalPosition);
 					block.Hit();
 				}
@@ -50,6 +54,11 @@ namespace GA.GArkanoid
 					// TODO: Play effect
 					LevelManager.Active.EffectPlayer.PlayEffect(EffectType.Bounce, GlobalPosition);
 				}
+			}
+
+			if (shouldBounce)
+			{
+				Bounce(collisionData);
 			}
 		}
 

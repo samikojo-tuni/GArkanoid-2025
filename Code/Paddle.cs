@@ -2,6 +2,7 @@
 // License: 3-Clause BSD License (See the project root folder for details).
 
 using System;
+using GA.Common;
 using GA.GArkanoid.Save;
 using GA.GArkanoid.Systems;
 using Godot;
@@ -16,7 +17,9 @@ namespace GA.GArkanoid
 		private int _minX = 0;
 		private int _maxX = 0;
 		private Sprite2D _sprite = null;
+		private CollisionShape2D _collisionShape = null;
 		private float _speed = 0;
+		private float _width = 1;
 
 		/// <summary>
 		/// The position on top of the paddle where the ball
@@ -27,9 +30,20 @@ namespace GA.GArkanoid
 
 		public Ball CurrentBall { get { return LevelManager.Active.CurrentBall; } }
 
+		public float Width
+		{
+			get => _width;
+			set
+			{
+				_width = value;
+				UpdatePaddleWidth();
+			}
+		}
+
 		#region Public Interface
 		public override void _Ready()
 		{
+			_collisionShape = this.GetNode<CollisionShape2D>();
 			_sprite = GetNode<Sprite2D>("CollisionShape2D/PaddleSprite");
 			UpdateWorldBounds();
 
@@ -91,6 +105,16 @@ namespace GA.GArkanoid
 			// for physics to work correctly for sure.
 			Position = new Vector2(Mathf.Clamp(Position.X, minX, maxX), Position.Y);
 		}
+
+		public void Expand(float multiplyer)
+		{
+			Width *= multiplyer;
+		}
+
+		public void Shrink(float multiplyer)
+		{
+			Width *= (1 / multiplyer);
+		}
 		#endregion Public Interface
 
 		#region Private implementation
@@ -99,6 +123,14 @@ namespace GA.GArkanoid
 			Rect2 viewPortRect = GetViewport().GetVisibleRect();
 			_minX = (int)viewPortRect.Position.X;
 			_maxX = (int)viewPortRect.End.X;
+		}
+
+		private void UpdatePaddleWidth()
+		{
+			if (_collisionShape != null)
+			{
+				_collisionShape.Scale = new Vector2(Scale.X, _width);
+			}
 		}
 
 		public Dictionary Save()

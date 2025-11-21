@@ -1,4 +1,4 @@
-[gd_scene load_steps=20 format=3 uid="uid://c503i8m1ik58h"]
+[gd_scene load_steps=34 format=3 uid="uid://c503i8m1ik58h"]
 
 [ext_resource type="PackedScene" uid="uid://b657ijmqdfo7" path="res://Scenes/Paddle.tscn" id="1_0ba56"]
 [ext_resource type="Script" uid="uid://x2m2t1wdyvun" path="res://Code/LevelManager.cs" id="1_5rrr5"]
@@ -14,6 +14,14 @@
 [ext_resource type="Script" uid="uid://c0gvrabxk3u68" path="res://Code/Data/EffectMap.cs" id="12_bktio"]
 [ext_resource type="PackedScene" uid="uid://bab1f1irkcvsl" path="res://Scenes/Effects/HitEffect.tscn" id="12_fhlu0"]
 [ext_resource type="PackedScene" uid="uid://brxu445mpiln1" path="res://Scenes/Effects/DeathEffect.tscn" id="13_bktio"]
+[ext_resource type="Script" uid="uid://nrt5s5462736" path="res://Code/PowerUp/PowerUpManager.cs" id="15_q24aw"]
+[ext_resource type="PackedScene" uid="uid://7a74fl3januk" path="res://Scenes/PowerUps/ExtendPaddle.tscn" id="16_32npc"]
+[ext_resource type="Script" uid="uid://vpkypg83jpo5" path="res://Code/PowerUp/PowerUpSceneMap.cs" id="17_yyp3s"]
+[ext_resource type="PackedScene" uid="uid://bkc07v0qmi27l" path="res://Scenes/PowerUps/GhostBall.tscn" id="18_g4pvc"]
+[ext_resource type="PackedScene" uid="uid://cxymgpkl753b1" path="res://Scenes/PowerUps/ExtraLifePowerUp.tscn" id="19_ifohm"]
+[ext_resource type="Script" uid="uid://kx11oxruot7e" path="res://Code/PowerUp/ExtraLife.cs" id="20_g4pvc"]
+[ext_resource type="Script" uid="uid://bops83rvh43l4" path="res://Code/PowerUp/GhostBall.cs" id="21_ifohm"]
+[ext_resource type="Script" uid="uid://b76nyh1q32b4v" path="res://Code/PowerUp/ExtendPaddle.cs" id="22_17mqb"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ienac"]
 size = Vector2(32, 31)
@@ -40,6 +48,40 @@ metadata/_custom_type_script = "uid://da3qgmm5jksyw"
 script = ExtResource("12_bktio")
 _entries = Array[Object]([SubResource("Resource_nrlyp"), SubResource("Resource_bktio"), SubResource("Resource_pmxqn")])
 metadata/_custom_type_script = "uid://c0gvrabxk3u68"
+
+[sub_resource type="Resource" id="Resource_q24aw"]
+script = ExtResource("17_yyp3s")
+PowerUpType = 1
+PowerUpScene = ExtResource("16_32npc")
+metadata/_custom_type_script = "uid://vpkypg83jpo5"
+
+[sub_resource type="Resource" id="Resource_32npc"]
+script = ExtResource("17_yyp3s")
+PowerUpType = 2
+PowerUpScene = ExtResource("18_g4pvc")
+metadata/_custom_type_script = "uid://vpkypg83jpo5"
+
+[sub_resource type="Resource" id="Resource_yyp3s"]
+script = ExtResource("17_yyp3s")
+PowerUpType = 3
+PowerUpScene = ExtResource("19_ifohm")
+metadata/_custom_type_script = "uid://vpkypg83jpo5"
+
+[sub_resource type="Resource" id="Resource_nwvxw"]
+script = ExtResource("20_g4pvc")
+Duration = 0.0
+metadata/_custom_type_script = "uid://kx11oxruot7e"
+
+[sub_resource type="Resource" id="Resource_4bpm7"]
+script = ExtResource("21_ifohm")
+Duration = 0.0
+metadata/_custom_type_script = "uid://bops83rvh43l4"
+
+[sub_resource type="Resource" id="Resource_n64rs"]
+script = ExtResource("22_17mqb")
+_multiplyer = 2.0
+Duration = 0.0
+metadata/_custom_type_script = "uid://b76nyh1q32b4v"
 
 [node name="Level" type="Node2D" node_paths=PackedStringArray("CurrentBall", "CurrentPaddle")]
 script = ExtResource("1_5rrr5")
@@ -143,5 +185,10 @@ offset_bottom = 61.0
 [node name="EffectPlayer" type="Node2D" parent="."]
 script = ExtResource("9_or7tv")
 EffectMap = SubResource("Resource_44tr1")
+
+[node name="PowerUpManager" type="Node2D" parent="."]
+script = ExtResource("15_q24aw")
+_powerUpSceneMap = Array[Object]([SubResource("Resource_q24aw"), SubResource("Resource_32npc"), SubResource("Resource_yyp3s")])
+_powerUpEffectTemplates = Array[Resource]([SubResource("Resource_nwvxw"), SubResource("Resource_4bpm7"), SubResource("Resource_n64rs")])
 
 [editable path="InGameUI"]

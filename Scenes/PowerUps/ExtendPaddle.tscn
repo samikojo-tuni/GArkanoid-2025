@@ -1,0 +1,10 @@
+[gd_scene load_steps=3 format=3 uid="uid://7a74fl3januk"]
+
+[ext_resource type="PackedScene" uid="uid://c3mf8ug2g6ovq" path="res://Scenes/PowerUps/BasePowerUp.tscn" id="1_o0nua"]
+[ext_resource type="Texture2D" uid="uid://d0g2m53wwfjr4" path="res://Art/32/PowerUps/Powerup-Extend.png" id="2_cm4pr"]
+
+[node name="ExtendPaddle" instance=ExtResource("1_o0nua")]
+Type = 1
+
+[node name="Sprite2D" parent="." index="1"]
+texture = ExtResource("2_cm4pr")

@@ -11,14 +11,11 @@ namespace GA.GArkanoid
 	[Tool]
 	public partial class Block : StaticBody2D
 	{
-		[Signal]
-		public delegate void BlockDestroyedEventHandler(Block block);
+		[Signal] public delegate void BlockDestroyedEventHandler(Block block);
 
-		[Export]
-		private Color _blockColor = Colors.White;
-
-		[Export]
-		private int _score = 0;
+		[Export] private Color _blockColor = Colors.White;
+		[Export] private int _score = 0;
+		[Export] private PowerUpType _guaranteedPowerUp = PowerUpType.None; // The type defines a powerup that is always spawned.
 
 		private bool _isEnabled = true;
 
@@ -32,6 +29,8 @@ namespace GA.GArkanoid
 				_collisionShape.Disabled = !value;
 			}
 		}
+
+		public PowerUpType GuaranteedPowerUp => _guaranteedPowerUp;
 
 		[Export] public string GUID { get; private set; } = null;
 

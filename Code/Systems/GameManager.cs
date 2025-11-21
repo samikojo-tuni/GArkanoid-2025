@@ -29,7 +29,7 @@ namespace GA.GArkanoid.Systems
 		public static Vector2I MinWindowSize { get; private set; }
 
 		[Signal]
-		public delegate void LivesChangedEventHandler(int lives);
+		public delegate void LivesChangedEventHandler(int lives, int previousLives);
 
 		[Signal]
 		public delegate void ScoreChangedEventHandler(int score);
@@ -75,8 +75,9 @@ namespace GA.GArkanoid.Systems
 			get { return CurrentPlayerData.Lives; }
 			set
 			{
+				int previous = CurrentPlayerData.Lives;
 				CurrentPlayerData.Lives = value;
-				EmitSignal(SignalName.LivesChanged, Lives);
+				EmitSignal(SignalName.LivesChanged, Lives, previous);
 
 				GD.Print($"Lives: {Lives}");
 			}

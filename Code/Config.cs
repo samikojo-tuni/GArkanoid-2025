@@ -13,11 +13,18 @@ namespace GA.GArkanoid
 		public static StringName LaunchAction = "Launch";
 		public static StringName PauseAction = "Pause";
 
+		#region LevelData
+
+		public const int LevelCount = 2;
+		public const float PowerUpSpawnChance = 0.3f;
+
+		#endregion
+
 
 		#region Player data
 		public static int MaxLives = 100;
 		public static string DefaultPlayerDataPath = "res://Config/DefaultPlayerData.tres";
-		public const int LevelCount = 2;
+
 		#endregion Player data
 
 		#region Audio

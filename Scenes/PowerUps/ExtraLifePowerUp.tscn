@@ -1,0 +1,10 @@
+[gd_scene load_steps=3 format=3 uid="uid://cxymgpkl753b1"]
+
+[ext_resource type="PackedScene" uid="uid://c3mf8ug2g6ovq" path="res://Scenes/PowerUps/BasePowerUp.tscn" id="1_5fpuq"]
+[ext_resource type="Texture2D" uid="uid://cyahwu83mel81" path="res://Art/32/PowerUps/PowerUp-ExtraLife.png" id="2_80qj2"]
+
+[node name="ExtraLife" instance=ExtResource("1_5fpuq")]
+Type = 3
+
+[node name="Sprite2D" parent="." index="1"]
+texture = ExtResource("2_80qj2")

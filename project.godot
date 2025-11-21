@@ -91,6 +91,7 @@ QuickSave={
 2d_physics/layer_1="Ball"
 2d_physics/layer_2="Paddle"
 2d_physics/layer_3="Static"
+2d_physics/layer_4="PowerUp"
 
 [rendering]
 

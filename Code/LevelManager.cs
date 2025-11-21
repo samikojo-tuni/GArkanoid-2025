@@ -1,6 +1,7 @@
 // © 2025 Sami Kojo <sami.kojo@tuni.fi>
 // License: 3-Clause BSD License (See the project root folder for details).
 
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using GA.Common;
@@ -32,6 +33,8 @@ namespace GA.GArkanoid
 		[Export]
 		public EffectPlayer EffectPlayer { get; private set; }
 
+		[Export] public PowerUpManager PowerUpManager { get; private set; }
+
 		public override void _Ready()
 		{
 			Active = this;
@@ -41,6 +44,11 @@ namespace GA.GArkanoid
 			if (EffectPlayer == null)
 			{
 				EffectPlayer = this.GetNode<EffectPlayer>();
+			}
+
+			if (PowerUpManager == null)
+			{
+				PowerUpManager = this.GetNode<PowerUpManager>();
 			}
 
 			IList<Block> blocks = this.GetNodesInChildren<Block>();
@@ -121,16 +129,20 @@ namespace GA.GArkanoid
 			return true;
 		}
 
-		private void OnLivesChanged(int lives)
+		private void OnLivesChanged(int lives, int previous)
 		{
-			if (lives > 0)
+			bool lostLives = previous - lives > 0;
+			if (lostLives)
 			{
-				CurrentBall.Reset();
-			}
-			else
-			{
-				// Game over
-				GameManager.Instance.ChangeState(States.StateType.GameOver);
+				if (lives > 0)
+				{
+					CurrentBall.Reset();
+				}
+				else
+				{
+					// Game over
+					GameManager.Instance.ChangeState(States.StateType.GameOver);
+				}
 			}
 		}
 
@@ -138,6 +150,8 @@ namespace GA.GArkanoid
 		{
 			block.BlockDestroyed -= OnBlockDestroyed;
 			_blockCount--;
+
+			SpawnPowerUp(block.GlobalPosition, block.GuaranteedPowerUp);
 
 			// One one level exists, win when all blocks are destroyed.
 			if (_blockCount <= 0)
@@ -151,6 +165,22 @@ namespace GA.GArkanoid
 				{
 					GameManager.Instance.ChangeState(States.StateType.Game);
 				}
+			}
+		}
+
+		private void SpawnPowerUp(Vector2 globalPosition, PowerUpType guaranteedPowerUp)
+		{
+			PowerUpType powerUpToSpawn = guaranteedPowerUp;
+			if (powerUpToSpawn == PowerUpType.None && GD.Randf() <= Config.PowerUpSpawnChance)
+			{
+				PowerUpType[] powerUpValues = Enum.GetValues<PowerUpType>();
+				int randomIndex = GD.RandRange(1, powerUpValues.Length - 1);
+				powerUpToSpawn = powerUpValues[randomIndex];
+			}
+
+			if (powerUpToSpawn != PowerUpType.None)
+			{
+				PowerUpManager.SpawnPowerUp(powerUpToSpawn, globalPosition);
 			}
 		}
 
